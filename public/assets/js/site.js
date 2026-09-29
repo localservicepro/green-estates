@@ -94,6 +94,7 @@
       el.addEventListener('change', function () { if (el.checkValidity()) clearError(el); });
     });
     form.addEventListener('submit', function (e) {
+      try {
       var invalid = [];
       form.querySelectorAll('input,select,textarea').forEach(function (el) {
         if (el.closest('.hp')) return;
@@ -115,13 +116,21 @@
         return;
       }
       /* Valid: the GHL tracking script listens to this submit event and records the fields.
-         We stop the browser navigation, give the beacon a moment, then go to the thank-you page. */
+         We stop the browser navigation, give the beacon a moment, then go to the thank-you page.
+         The redirect is scheduled first so nothing that follows can prevent it. */
       e.preventDefault();
-      if (summary) summary.classList.remove('show');
-      if (btn) { btn.classList.add('is-loading'); btn.setAttribute('disabled', ''); btn.innerHTML = 'Sending…'; }
-      try { w.dataLayer = w.dataLayer || []; w.dataLayer.push({ event: 'quote_form_submit', form_name: form.getAttribute('data-quote-form') }); } catch (err) {}
       var next = form.getAttribute('data-redirect') || '/thank-you/';
-      setTimeout(function () { w.location.assign(next); }, 900);
+      if (form.dataset.sent) return;
+      form.dataset.sent = '1';
+      var go = function () { try { w.location.assign(next); } catch (err) { w.location.href = next; } };
+      var timer = setTimeout(go, 900);
+      try {
+        if (summary) summary.classList.remove('show');
+        if (btn) { btn.classList.add('is-loading'); btn.setAttribute('disabled', ''); btn.innerHTML = 'Sending…'; }
+        w.dataLayer = w.dataLayer || [];
+        w.dataLayer.push({ event: 'quote_form_submit', form_name: form.getAttribute('data-quote-form') });
+      } catch (err) { clearTimeout(timer); go(); }
+      } catch (fatal) { e.preventDefault(); w.location.href = form.getAttribute('data-redirect') || '/thank-you/'; }
     });
   });
 
