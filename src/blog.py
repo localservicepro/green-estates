@@ -26,7 +26,7 @@ def post_url(p):
 
 def blog_card(p, sizes="(min-width: 1024px) 33vw, 100vw"):
     cat, _ = CATEGORIES[p["category"]]
-    return f'''<a class="card post-card" href="{post_url(p)}">
+    return f'''<a class="card service-card post-card" href="{post_url(p)}">
   <div class="service-card__img">{picture(p["image"], p["alt"], sizes=sizes)}</div>
   <div class="service-card__body">
     <div class="post-card__meta"><span class="post-card__cat">{esc(cat)}</span><span>{reading_time(p)} min read</span></div>

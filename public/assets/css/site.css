@@ -463,3 +463,5 @@ h1,h2,h3,h4{overflow-wrap:break-word}
 .post-grid>*{min-width:0}
 .post-body .tbl-wrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.2em 0;border-radius:12px;border:1px solid var(--g-200)}
 .post-body .tbl-wrap table{margin:0;min-width:520px}
+a.card,a.card:hover{text-decoration:none}
+a.card h3{text-decoration:none}
