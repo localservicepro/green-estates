@@ -407,6 +407,6 @@ h1,h2,h3,h4{overflow-wrap:break-word}
 .review-card__head{display:flex;align-items:center;gap:12px}
 .review-card__avatar{width:44px;height:44px;border-radius:50%;background:var(--c-action);color:var(--c-dark);display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:1.1rem;flex:none}
 .review-card__head strong{display:block;font-family:var(--font-display);font-size:.95rem;color:var(--c-dark)}
-.review-card__head span{display:block;font-size:.82rem;color:var(--g-500)}
+.review-card__head div span{display:block;font-size:.82rem;color:var(--g-500)}
 .review-card p{margin:0;font-size:.98rem;line-height:1.55;color:var(--g-600)}
 .section--light .review-card,.section--white .review-card{background:var(--white)}
