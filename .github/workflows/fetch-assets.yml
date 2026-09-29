@@ -11,7 +11,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install -q gdown pillow
+      - run: pip install -q --upgrade gdown pillow && gdown --version
       - name: Download originals
         run: |
           mkdir -p assets-src
@@ -19,7 +19,10 @@ jobs:
             [ -z "$id" ] && continue
             case "$id" in \#*) continue;; esac
             if [ ! -f "assets-src/$name" ]; then
-              gdown --quiet --fuzzy "https://drive.google.com/uc?id=$id" -O "assets-src/$name" || echo "FAILED $name"
+              gdown --quiet "$id" -O "assets-src/$name" \
+                || curl -sL "https://drive.usercontent.google.com/download?id=$id&export=download&confirm=t" -o "assets-src/$name" \
+                || echo "FAILED $name"
+              if [ -f "assets-src/$name" ] && head -c 15 "assets-src/$name" | grep -qi "<!DOCTYPE\|<html"; then echo "HTML-NOT-FILE $name"; rm -f "assets-src/$name"; fi
             fi
           done < scripts/drive-files.txt
           ls -la assets-src
