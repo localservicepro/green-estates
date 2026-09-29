@@ -1,0 +1,57 @@
+name: Fetch Drive assets
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q gdown pillow
+      - name: Download originals
+        run: |
+          mkdir -p assets-src
+          while IFS='|' read -r id name; do
+            [ -z "$id" ] && continue
+            case "$id" in \#*) continue;; esac
+            if [ ! -f "assets-src/$name" ]; then
+              gdown --quiet --fuzzy "https://drive.google.com/uc?id=$id" -O "assets-src/$name" || echo "FAILED $name"
+            fi
+          done < scripts/drive-files.txt
+          ls -la assets-src
+      - name: Downscale for the repo
+        run: |
+          python - <<'PY'
+          import os
+          from PIL import Image, ImageOps
+          src='assets-src'; out='assets-src'
+          for f in sorted(os.listdir(src)):
+              p=os.path.join(src,f)
+              if f=='logo.webp' or os.path.getsize(p)==0: continue
+              try:
+                  im=Image.open(p); im=ImageOps.exif_transpose(im).convert('RGB')
+              except Exception as e:
+                  print('skip',f,e); continue
+              w,h=im.size
+              if max(w,h)>1800:
+                  s=1800/max(w,h); im=im.resize((round(w*s),round(h*s)),Image.LANCZOS)
+              base=os.path.splitext(f)[0]
+              im.save(os.path.join(out,base+'.jpg'),'JPEG',quality=86,optimize=True,progressive=True)
+              if not f.endswith('.jpg'): os.remove(p)
+              print(f,'->',base+'.jpg',im.size)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets-src
+          git commit -m "chore: add source photos from client Drive folder" || echo "nothing to commit"
+          git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: assets-src
+          path: assets-src
