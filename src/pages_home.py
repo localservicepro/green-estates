@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from gesite import *
+BLOG_TEASER = ''
 
 def home():
     faqs = [
@@ -152,6 +153,7 @@ def home():
   </div>
 </section>
 
+{BLOG_TEASER}
 {faq_section(faqs, heading="Lawn mowing Moreton Bay: questions we get asked", intro="Straight answers on pricing, scheduling and what is included.")}
 {cta_band("Ready to hand the lawn over?", "Fixed-price lawn mowing, hedging, cleanups and mulching across Moreton Bay and Somerset. Send the details and we will come back with a price within one business day.")}
 '''

@@ -119,6 +119,7 @@ def header(current="/"):
       </div>
       <a href="/about/" class="nav-link">About</a>
       <a href="/#areas" class="nav-link">Areas</a>
+      <a href="/blog/" class="nav-link">Blog</a>
       <a href="/contact/" class="nav-link">Contact</a>
     </nav>
     <div class="nav-actions">
@@ -135,6 +136,7 @@ def header(current="/"):
     <div class="m-sub" id="m-services">{m_items}</div>
     <a class="m-link" href="/about/">About</a>
     <a class="m-link" href="/#areas">Service Areas</a>
+    <a class="m-link" href="/blog/">Blog</a>
     <a class="m-link" href="/contact/">Contact</a>
   </nav>
   <div class="m-foot">
@@ -172,6 +174,7 @@ def footer():
           <li><a href="/">Home</a></li>
           <li><a href="/about/">About Green Estates</a></li>
           <li><a href="/#areas">Suburbs we serve</a></li>
+          <li><a href="/blog/">Lawn &amp; garden advice</a></li>
           <li><a href="/contact/">Contact &amp; free quote</a></li>
         </ul>
       </div>
@@ -397,6 +400,18 @@ def schema_graph(page):
                       "provider": {"@id": SITE["url"] + "/#business"}, "url": url,
                       "areaServed": [{"@type": "AdministrativeArea", "name": "Moreton Bay Region, Queensland"}, {"@type": "AdministrativeArea", "name": "Somerset Region, Queensland"}],
                       "hasOfferCatalog": {"@type": "OfferCatalog", "name": s["name"], "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": n}} for n in s["items"]]}})
+    if page.get("article"):
+        a = page["article"]
+        graph.append({"@type": "BlogPosting", "@id": url + "#article", "headline": a["headline"], "description": page["description"],
+                      "image": SITE["url"] + f"/assets/img/{page['hero_img']}-1600.webp", "datePublished": a["date"], "dateModified": a["date"],
+                      "author": {"@type": "Person", "name": SITE["owner"], "jobTitle": "Owner, Green Estates Gardening", "url": SITE["url"] + "/about/"},
+                      "publisher": {"@type": "Organization", "name": SITE["name"], "logo": {"@type": "ImageObject", "url": SITE["url"] + "/assets/img/logo-green-estates-gardening.webp"}},
+                      "mainEntityOfPage": {"@id": url + "#webpage"}, "articleSection": a["section"], "wordCount": a["words"], "inLanguage": "en-AU",
+                      "about": {"@id": SITE["url"] + "/#business"}, "isPartOf": {"@type": "Blog", "@id": SITE["url"] + "/blog/#blog", "name": "Green Estates Gardening Blog"}})
+    if page.get("blog_index"):
+        graph.append({"@type": "Blog", "@id": SITE["url"] + "/blog/#blog", "name": "Green Estates Gardening Blog", "url": SITE["url"] + "/blog/",
+                      "publisher": {"@id": SITE["url"] + "/#business"},
+                      "blogPost": [{"@type": "BlogPosting", "headline": b["name"], "url": b["url"]} for b in page["blog_index"]]})
     if page.get("faqs"):
         graph.append({"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": _strip(a)}} for q, a in page["faqs"]]})
     return {"@context": "https://schema.org", "@graph": graph}

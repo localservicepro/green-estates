@@ -4,14 +4,17 @@ Usage: python3 src/build.py"""
 import os, re, json, sys, html as htmllib
 sys.path.insert(0, os.path.dirname(__file__))
 from gesite import SITE, shell, ALL_SUBURBS
-import pages_home, pages_services, pages_other
+import pages_home, pages_services, pages_other, blog, blog_posts
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUB = os.path.join(ROOT, "public")
 
+POSTS = blog_posts.POSTS
+pages_home.BLOG_TEASER = blog.blog_teaser_section(POSTS)
 PAGES = [pages_home.home(), pages_services.lawn_mowing(), pages_services.hedge_trimming(),
          pages_services.garden_cleanup(), pages_services.mulching(), pages_other.about(),
-         pages_other.contact(), pages_other.thank_you(), pages_other.not_found()]
+         pages_other.contact(), pages_other.thank_you(), pages_other.not_found(), blog.render_index(POSTS)]
+PAGES += [blog.render_post(p, POSTS) for p in POSTS]
 
 def out_path(path):
     if path.endswith(".html"):
@@ -106,7 +109,7 @@ def write_extras():
     indexable = [p for p, _ in PAGES if not p.get("noindex")]
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for p in indexable:
-        pri = "1.0" if p["path"] == "/" else ("0.9" if p.get("service") else "0.7")
+        pri = "1.0" if p["path"] == "/" else ("0.9" if p.get("service") else ("0.6" if p.get("article") else "0.7"))
         sm.append(f"  <url><loc>{SITE['url']}{p['path']}</loc><changefreq>monthly</changefreq><priority>{pri}</priority></url>")
     sm.append("</urlset>")
     open(os.path.join(PUB, "sitemap.xml"), "w").write("\n".join(sm))
