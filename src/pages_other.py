@@ -58,6 +58,13 @@ def about():
   </div>
 </section>
 
+<section class="section section--white" aria-labelledby="rev-h">
+  <div class="container">
+    <div class="section-head center" data-reveal><span class="eyebrow">What our clients say</span><h2 id="rev-h">Rated 5.0 on Google by the people we work for</h2><p class="lead">Four of our 23 five-star Google reviews, quoted as written. Several of these clients have been with us for more than a decade.</p></div>
+    {review_cards()}
+  </div>
+</section>
+
 <section class="section section--dark" aria-labelledby="serve-h">
   <div class="container">
     <div class="section-head" data-reveal><span class="eyebrow">Who we work with</span><h2 id="serve-h">Local gardeners Moreton Bay homes, acreage, rentals and commercial sites rely on</h2><p class="lead">The same fixed-price, turn-up-on-time approach whether it is a fortnightly lawn in Burpengary or a body-corporate contract in North Lakes.</p></div>

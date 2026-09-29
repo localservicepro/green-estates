@@ -303,6 +303,23 @@ def suburbs_section(heading, intro, theme="dark", id_="areas", service_word="law
   </div>
 </section>'''
 
+REVIEWS = [
+    ("Raymond Jack", "Google review", "Hamish has been doing our lawns and gardens for several years now, and always does a good job. No fuss, reasonably priced, and always reliable"),
+    ("Barry Harvey", "Google review · Somerset Dam", "The Lake House - Hazeldean - Somerset Dam area, Hamish has been the groundsman for our 3.74 acre B&B property which consists of 2 dwellings and a boat shed with a gully and two dams, he has been doing a fantastic job, and always punctual. I highly recommend his services."),
+    ("Dylan Penny", "Google review", "Hamish has been a wonderful contractor to assist me with managing my landscaping needs across a few properties. He is very well priced, and maintains a high standard of work. Could not recommend enough!"),
+    ("Kathy Fowler", "Google review", "Green Estates Gardening has collaborated with me on garden decisions for the past thirteen years. Hamish Baggley is my go-to man for gardening decisions of all kinds — one of the few people whose judgment I trust implicitly."),
+]
+
+def review_cards():
+    cards = []
+    for name, meta, text in REVIEWS:
+        cards.append(f'''<blockquote class="review-card">
+  <div class="review-card__head"><span class="review-card__avatar" aria-hidden="true">{esc(name[0])}</span><div><strong>{esc(name)}</strong><span>{esc(meta)}</span></div></div>
+  {stars()}<span class="visually-hidden">Rated 5 out of 5</span>
+  <p>“{esc(text)}”</p>
+</blockquote>''')
+    return '<div class="grid grid--4 reviews" data-reveal-stagger>' + "".join(cards) + '</div>'
+
 def trust_strip():
     return f'''<ul class="trust-strip">
   <li>{stars()}<span><strong>5.0</strong> Google rating · 23 five-star reviews</span></li>

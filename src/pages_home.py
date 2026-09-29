@@ -138,7 +138,7 @@ def home():
       <div data-reveal>
         <span class="eyebrow">Rated by locals</span>
         <h2 id="reviews-h">Rated 5.0 on Google by Moreton Bay locals</h2>
-        <p class="lead">Every one of our 23 Google reviews is five stars. Reliability is the word that comes up most: we turn up when we say we will, we do what we quoted, and the property looks sharp when we leave.</p>
+        <p class="lead">Every one of our 23 Google reviews is five stars. Reliability is the word that comes up most: punctual, well priced, and the same standard visit after visit, from suburban lawns in Caboolture to a 3.74-acre property on Somerset Dam.</p>
         <p>Regular lawn mowing Moreton Bay clients across Morayfield, Burpengary, North Lakes and Strathpine, acreage owners in Wamuran and Woodford, and property managers with a list of rentals to keep tidy. If you would like references for a larger or commercial job, just ask.</p>
         <div class="btn-row"><a class="btn btn--primary" href="https://www.google.com/search?q=Green+Estates+Gardening+Wamuran+reviews" rel="noopener" target="_blank">Read our Google reviews {icon("arrow")}</a><a class="btn btn--secondary" href="{SITE['facebook']}" rel="noopener" target="_blank">{icon("facebook")} Facebook</a></div>
       </div>
@@ -147,6 +147,8 @@ def home():
         <div class="img-badge">{stars()}<div><strong>5.0</strong><br><span>23 Google reviews</span></div></div>
       </div>
     </div>
+    <div class="section-head" style="margin-top:64px;margin-bottom:28px" data-reveal><h3>What our clients say</h3><p class="muted">Four of the 23 five-star reviews, quoted as written.</p></div>
+    {review_cards()}
   </div>
 </section>
 
