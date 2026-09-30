@@ -226,6 +226,7 @@ def footer():
 
 SERVICE_OPTIONS = ["Ride-On / Acreage Mowing", "Push Mowing", "Hedge Trimming", "Garden Cleanup", "Weed Control",
                    "Mulching", "Minor Tree Work", "Regular Maintenance Package", "Something else"]
+PROPERTY_TYPE_OPTIONS = ["Residential home", "Acreage / rural property", "Commercial / business premises", "Body corporate / strata", "Rental / real estate managed", "Other"]
 SIZE_OPTIONS = ["Under 500 m² (standard block)", "500–1,000 m²", "1,000–2,500 m²", "2,500 m² – 1 acre", "1–5 acres", "5+ acres", "Commercial / strata"]
 
 def quote_form(form_id="quote", preselect=None, title="Get your free quote", intro="Tell us about the property and we'll come back with a fixed price. No obligation.", source="", button="Send my quote request"):
@@ -250,9 +251,10 @@ def quote_form(form_id="quote", preselect=None, title="Get your free quote", int
     <div class="field"><label for="{p}-email">Email</label><input id="{p}-email" name="email" type="email" autocomplete="email" required><span class="error" aria-live="polite"></span></div>
     <div class="field"><label for="{p}-address">Property address <span class="opt">(street &amp; suburb)</span></label><input id="{p}-address" name="property_address" type="text" autocomplete="street-address" placeholder="e.g. 12 Smith Rd, Caboolture" required><span class="error" aria-live="polite"></span></div>
     <div class="field-row">
+      <div class="field"><label for="{p}-type">Property type</label><select id="{p}-type" name="property_type" required>{opts(PROPERTY_TYPE_OPTIONS)}</select><span class="error" aria-live="polite"></span></div>
       <div class="field"><label for="{p}-size">Property size <span class="opt">(optional)</span></label><select id="{p}-size" name="property_size">{opts(SIZE_OPTIONS, placeholder="Not sure")}</select></div>
-      <div class="field"><label for="{p}-service">Service needed</label><select id="{p}-service" name="service_needed" required>{opts(SERVICE_OPTIONS, preselect)}</select><span class="error" aria-live="polite"></span></div>
     </div>
+    <div class="field"><label for="{p}-service">Service needed</label><select id="{p}-service" name="service_needed" required>{opts(SERVICE_OPTIONS, preselect)}</select><span class="error" aria-live="polite"></span></div>
     <div class="field"><label for="{p}-notes">Job notes <span class="opt">(optional)</span></label><textarea id="{p}-notes" name="job_notes" rows="3" placeholder="Anything we should know — gates, slopes, how overgrown it is, how often you'd like us"></textarea></div>
     <button type="submit" class="btn btn--primary btn--lg btn--block">{esc(button)} {icon("arrow")}</button>
     <p class="form-fine">We reply within one business day, Mon–Sat. Or call <a href="tel:{SITE['phone_tel']}">{SITE['phone']}</a>.</p>

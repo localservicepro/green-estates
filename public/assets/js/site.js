@@ -82,6 +82,7 @@
       email: 'Please enter a valid email address.',
       phone: 'Please enter a phone number we can call you on.',
       property_address: 'Please enter the property address or suburb.',
+      property_type: 'Please choose the property type.',
       service_needed: 'Please choose the service you need.'
     };
     var fieldWrap = function (el) { return el.closest ? el.closest('.field') : null; };

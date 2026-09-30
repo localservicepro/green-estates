@@ -51,8 +51,8 @@ title/description/first 100 words, word count, FAQ count, valid JSON-LD, no brok
 ## Forms / CRM
 
 Every quote form posts field names that map to the GoHighLevel contact fields:
-`full_name`, `email`, `phone`, `property_address`, `property_size`, `service_needed`, `job_notes`
-(+ hidden `source_page`). The LeadConnector `external-tracking.js` script in `<head>` captures the
+`full_name`, `email`, `phone`, `property_address`, `property_type` (custom field `{{contact.property_type}}`),
+`property_size`, `service_needed`, `job_notes` (+ hidden `source_page`). The LeadConnector `external-tracking.js` script in `<head>` captures the
 submit event; `site.js` then redirects to `/thank-you/`. There is no server endpoint.
 
 ## Local preview
