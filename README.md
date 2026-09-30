@@ -12,6 +12,8 @@ https://www.greenestatesgardening.com.
 | `src/build.py` | Generates every page in `public/` from the content modules and runs SEO checks. |
 | `src/gesite.py` | Shared components: header, mega-menu, footer, quote form, schema, page shell. |
 | `src/pages_*.py` | Page copy, FAQs and metadata (locked H1/title/description from the strategy doc). |
+| `src/blog.py`, `src/blog_posts_*.py` | Blog renderer and the ten articles. `src/density.py` reports keyword density. |
+| `src/suburbs.py`, `src/suburbs_data_*.py` | Service-areas hub and the 17 suburb landing pages. |
 | `scripts/build-images.py` | Turns `assets-src/` photos into named, optimised WebP files. |
 | `assets-src/` | Client photos pulled from the shared Google Drive folder (source of truth for imagery). |
 | `design-system/green-estates-gardening/MASTER.md` | Brand tokens, type, motion and component rules (ui-ux-pro-max + brand board). |
@@ -41,6 +43,10 @@ title/description/first 100 words, word count, FAQ count, valid JSON-LD, no brok
 | `/about/` | Local Gardeners Moreton Bay |
 | `/contact/` | Lawn Mowing Quote Moreton Bay |
 | `/thank-you/` | noindex, form redirect target |
+| `/blog/` + 10 posts | AEO articles (see `docs/blog-topic-research.md`) |
+| `/service-areas/` | Hub linking every suburb page |
+| `/blog/lawn-mowing-<suburb>/` ×7, `/blog/garden-maintenance-<suburb>/` ×2 | Existing suburb landing pages, URLs preserved per strategy doc |
+| `/service-areas/lawn-mowing-<suburb>/` ×8 | New suburb pages. Deception Bay, Petrie and Kallangur are noindexed and unlisted until `CONFIRMED_RADIUS = True` in `src/suburbs.py` |
 
 ## Forms / CRM
 

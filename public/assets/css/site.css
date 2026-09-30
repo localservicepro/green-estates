@@ -465,3 +465,21 @@ h1,h2,h3,h4{overflow-wrap:break-word}
 .post-body .tbl-wrap table{margin:0;min-width:520px}
 a.card,a.card:hover{text-decoration:none}
 a.card h3{text-decoration:none}
+
+/* Service areas */
+.chips li a{color:inherit;text-decoration:none}
+.suburb-grid{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:640px){.suburb-grid{grid-template-columns:1fr 1fr}}
+@media (min-width:1024px){.suburb-grid{grid-template-columns:repeat(3,1fr)}}
+.suburb-card{display:grid;grid-template-columns:44px 1fr 20px;gap:14px;align-items:center;padding:14px 16px;border:1px solid var(--g-200);border-radius:16px;background:var(--white);text-decoration:none;color:var(--c-dark);transition:transform var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out),border-color var(--dur)}
+.suburb-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-s);border-color:var(--c-action);color:var(--c-dark)}
+.suburb-card .icon-tile{width:44px;height:44px;border-radius:12px}
+.suburb-card strong{display:block;font-family:var(--font-display);font-size:.95rem}
+.suburb-card em{display:block;font-style:normal;font-size:.84rem;color:var(--g-500)}
+.suburb-card>svg{width:20px;height:20px;color:var(--c-action)}
+.suburb-list{display:grid;gap:10px}
+.hub-group h3{font-size:1.25rem;margin-bottom:4px}
+.hub-group>.muted{margin-bottom:16px}
+.hub-others{margin-top:48px;padding-top:32px;border-top:1px solid var(--g-200)}
+.hub-others h3{font-size:1.1rem}
+.section--white .chips li{border-color:var(--g-300);background:var(--c-light);color:var(--c-dark)}

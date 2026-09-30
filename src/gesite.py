@@ -49,6 +49,7 @@ SERVICES = [
          points=["Bed prep & mulch supply", "Small limb & branch removal", "Storm tidy-ups"]),
 ]
 SERVICE_BY_SLUG = {s["slug"]: s for s in SERVICES}
+SUBURB_LINKS = {}  # filled by build.py from suburbs.LIVE
 
 ICONS = {
     "grid": '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg>',
@@ -118,7 +119,7 @@ def header(current="/"):
         <div class="dropdown-panel" id="services-menu" role="menu">{dd}</div>
       </div>
       <a href="/about/" class="nav-link">About</a>
-      <a href="/#areas" class="nav-link">Areas</a>
+      <a href="/service-areas/" class="nav-link">Areas</a>
       <a href="/blog/" class="nav-link">Blog</a>
       <a href="/contact/" class="nav-link">Contact</a>
     </nav>
@@ -135,7 +136,7 @@ def header(current="/"):
     <button class="m-link m-acc" aria-expanded="false" aria-controls="m-services">Services <svg class="caret" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
     <div class="m-sub" id="m-services">{m_items}</div>
     <a class="m-link" href="/about/">About</a>
-    <a class="m-link" href="/#areas">Service Areas</a>
+    <a class="m-link" href="/service-areas/">Service Areas</a>
     <a class="m-link" href="/blog/">Blog</a>
     <a class="m-link" href="/contact/">Contact</a>
   </nav>
@@ -153,8 +154,11 @@ def header(current="/"):
 
 def footer():
     svc = "\n".join(f'<li><a href="/{s["slug"]}/">{esc(s["card"])}</a></li>' for s in SERVICES)
-    areas_mb = ", ".join(MORETON_BAY)
-    areas_som = ", ".join(SOMERSET)
+    def _l(n):
+        u = SUBURB_LINKS.get(n)
+        return f'<a href="{u}">{esc(n)}</a>' if u else esc(n)
+    areas_mb = ", ".join(_l(n) for n in MORETON_BAY)
+    areas_som = ", ".join(_l(n) for n in SOMERSET)
     return f'''
 <footer class="site-footer">
   <div class="container">
@@ -173,7 +177,7 @@ def footer():
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/about/">About Green Estates</a></li>
-          <li><a href="/#areas">Suburbs we serve</a></li>
+          <li><a href="/service-areas/">Service areas</a></li>
           <li><a href="/blog/">Lawn &amp; garden advice</a></li>
           <li><a href="/contact/">Contact &amp; free quote</a></li>
         </ul>
@@ -292,7 +296,12 @@ def cta_band(heading="Ready for a tidy, healthy property?", text="Send a few det
 
 def suburbs_section(heading, intro, theme="dark", id_="areas", service_word="lawn mowing", extra=""):
     def chips(lst):
-        return "".join(f'<li{" class=is-home" if s == "Wamuran" else ""}>{esc(s)}</li>' for s in lst)
+        out = []
+        for s in lst:
+            cls = ' class="is-home"' if s == "Wamuran" else ""
+            u = SUBURB_LINKS.get(s)
+            out.append(f'<li{cls}><a href="{u}">{esc(s)}</a></li>' if u else f'<li{cls}>{esc(s)}</li>')
+        return "".join(out)
     return f'''
 <section class="section section--{theme}" id="{id_}" aria-labelledby="{id_}-h">
   <div class="container">
@@ -302,7 +311,7 @@ def suburbs_section(heading, intro, theme="dark", id_="areas", service_word="law
       <div class="area-group"><h3>{icon("pin")} Somerset Region</h3><ul class="chips">{chips(SOMERSET)}</ul></div>
     </div>
     {extra}
-    <p class="muted" style="margin-top:24px;max-width:70ch" data-reveal>Not on the list? We travel throughout the Moreton Bay and Somerset regions for regular {service_word} and larger one-off jobs. <a href="/contact/">Ask us about your suburb</a>.</p>
+    <p class="muted" style="margin-top:24px;max-width:70ch" data-reveal>Not on the list? We travel throughout the Moreton Bay and Somerset regions for regular {service_word} and larger one-off jobs. <a href="/service-areas/">See all service areas</a> or <a href="/contact/">ask us about your suburb</a>.</p>
   </div>
 </section>'''
 
@@ -398,7 +407,7 @@ def schema_graph(page):
         s = page["service"]
         graph.append({"@type": "Service", "@id": url + "#service", "name": s["name"], "serviceType": s["type"], "description": page["description"],
                       "provider": {"@id": SITE["url"] + "/#business"}, "url": url,
-                      "areaServed": [{"@type": "AdministrativeArea", "name": "Moreton Bay Region, Queensland"}, {"@type": "AdministrativeArea", "name": "Somerset Region, Queensland"}],
+                      "areaServed": ([{"@type": "Place", "name": a} for a in s["area"]] if s.get("area") else [{"@type": "AdministrativeArea", "name": "Moreton Bay Region, Queensland"}, {"@type": "AdministrativeArea", "name": "Somerset Region, Queensland"}]),
                       "hasOfferCatalog": {"@type": "OfferCatalog", "name": s["name"], "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": n}} for n in s["items"]]}})
     if page.get("article"):
         a = page["article"]
