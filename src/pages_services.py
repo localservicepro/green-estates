@@ -15,7 +15,7 @@ def service_hero(s, h1, eyebrow, lead, preselect, hero_img, hero_alt, crumb_labe
         <span class="gold-rule" aria-hidden="true"></span>
         <p class="lead">{lead}</p>
         <div class="btn-row hero__cta">
-          <a href="#quote" class="btn btn--primary btn--lg">Get a Fixed-Price Quote {icon("arrow")}</a>
+          <a href="#quote" class="btn btn--primary btn--lg" data-open-quote>Get a Fixed-Price Quote {icon("arrow")}</a>
           <a href="tel:{SITE['phone_tel']}" class="btn btn--secondary btn--lg">{icon("phone")} {SITE['phone']}</a>
         </div>
         {trust_strip()}

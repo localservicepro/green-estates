@@ -62,7 +62,7 @@ def render_suburb(s):
         <span class="gold-rule" aria-hidden="true"></span>
         <p class="lead">{s["lead"]}</p>
         <div class="btn-row hero__cta">
-          <a href="#quote" class="btn btn--primary btn--lg">Get a Fixed-Price Quote {icon("arrow")}</a>
+          <a href="#quote" class="btn btn--primary btn--lg" data-open-quote>Get a Fixed-Price Quote {icon("arrow")}</a>
           <a href="tel:{SITE['phone_tel']}" class="btn btn--secondary btn--lg">{icon("phone")} {SITE['phone']}</a>
         </div>
         {trust_strip()}
@@ -128,7 +128,7 @@ def render_hub():
     <h1>Lawn Mowing &amp; Garden Service Areas Across Moreton Bay &amp; Somerset</h1>
     <span class="gold-rule" aria-hidden="true"></span>
     <p class="lead">Green Estates Gardening's service areas run from the Redcliffe peninsula and Bribie Island, up the Bruce Highway corridor through North Lakes, Narangba, Burpengary, Morayfield and Caboolture, out to our home base in Wamuran and over the D'Aguilar Range to Kilcoy and the Somerset valleys. Pick your suburb below for local detail, or send the address and we will confirm.</p>
-    <div class="btn-row hero__cta"><a href="/contact/#quote" class="btn btn--primary btn--lg">Get a Free Quote {icon("arrow")}</a><a href="tel:{SITE['phone_tel']}" class="btn btn--secondary btn--lg">{icon("phone")} {SITE['phone']}</a></div>
+    <div class="btn-row hero__cta"><a href="/contact/#quote" class="btn btn--primary btn--lg" data-open-quote>Get a Free Quote {icon("arrow")}</a><a href="tel:{SITE['phone_tel']}" class="btn btn--secondary btn--lg">{icon("phone")} {SITE['phone']}</a></div>
   </div>
 </section>
 

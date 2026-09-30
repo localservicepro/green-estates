@@ -71,6 +71,7 @@ ICONS = {
     "star": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.4l-5.9 3.2 1.3-6.6L2.5 9.4l6.6-.8L12 2.5z"/></svg>',
     "sun": '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
     "facebook": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8h3.3Z"/></svg>',
+    "close": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>',
     "users": '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.5a5 5 0 0 1 6 5"/></svg>',
     "drop": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/></svg>',
 }
@@ -146,7 +147,7 @@ def header(current="/"):
     </nav>
     <div class="nav-actions">
       <a href="tel:{SITE['phone_tel']}" class="nav-phone">{icon("phone")}<span>{SITE['phone']}</span></a>
-      <a href="/contact/#quote" class="btn btn--primary nav-cta">Get a Free Quote</a>
+      <a href="/contact/#quote" class="btn btn--primary nav-cta" data-open-quote>Get a Free Quote</a>
     </div>
     <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button>
   </div>
@@ -162,7 +163,7 @@ def header(current="/"):
     <a class="m-link" href="/contact/">Contact</a>
   </nav>
   <div class="m-foot">
-    <a href="/contact/#quote" class="btn btn--primary btn--lg">Get a Free Quote</a>
+    <a href="/contact/#quote" class="btn btn--primary btn--lg" data-open-quote>Get a Free Quote</a>
     <a href="tel:{SITE['phone_tel']}" class="btn btn--secondary btn--lg">{icon("phone")} Call {SITE['phone']}</a>
   </div>
   <p class="m-nap">{SITE['legal']} · Wamuran QLD 4512 · {SITE['hours']}</p>
@@ -445,6 +446,26 @@ def schema_graph(page):
 
 # ---------------- Page shell ----------------
 
+MODAL_PRESELECT = {"lawn-mowing": "Ride-On / Acreage Mowing", "hedge-trimming": "Hedge Trimming",
+                   "garden-cleanup": "Garden Cleanup", "mulching": "Mulching"}
+
+def quote_modal(page):
+    """Pop-up quote form opened by the header and hero CTAs. Same fields and CRM mapping as the inline form."""
+    preselect = None
+    for key, opt in MODAL_PRESELECT.items():
+        if page["path"].lstrip("/").startswith(key):
+            preselect = opt
+    form = quote_form("quote-modal-form", preselect=preselect, source=page["path"] + "#popup")
+    return f'''
+<div class="modal" id="quote-modal" role="dialog" aria-modal="true" aria-labelledby="quote-modal-title" hidden>
+  <div class="modal__backdrop" data-close-quote></div>
+  <div class="modal__panel" tabindex="-1">
+    <button type="button" class="modal__close" data-close-quote aria-label="Close quote form">{icon("close")}</button>
+    {form.replace('<h2>', '<h2 id="quote-modal-title">', 1)}
+  </div>
+</div>'''
+
+
 def shell(page, body):
     url = SITE["url"] + page["path"]
     robots = '<meta name="robots" content="noindex, nofollow">' if page.get("noindex") else '<meta name="robots" content="index, follow, max-image-preview:large">'
@@ -495,6 +516,7 @@ def shell(page, body):
 {body}
 </main>
 {footer()}
+{quote_modal(page)}
 </body>
 </html>
 '''

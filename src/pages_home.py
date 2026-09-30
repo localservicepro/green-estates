@@ -41,7 +41,7 @@ def home():
         <span class="gold-rule" aria-hidden="true"></span>
         <p class="lead">Green Estates Gardening provides professional lawn mowing Moreton Bay and Somerset property owners rely on week in, week out: ride-on and acreage mowing, push mowing, hedge trimming, garden cleanups, weed control and mulching. Fixed-price quotes, one reliable local operator, and a property you are proud to pull into.</p>
         <div class="btn-row hero__cta">
-          <a href="#quote" class="btn btn--primary btn--lg">Get a Free Quote {icon("arrow")}</a>
+          <a href="#quote" class="btn btn--primary btn--lg" data-open-quote>Get a Free Quote {icon("arrow")}</a>
           <a href="tel:{SITE['phone_tel']}" class="btn btn--secondary btn--lg">{icon("phone")} {SITE['phone']}</a>
         </div>
         {trust_strip()}

@@ -69,6 +69,51 @@
     range.addEventListener('input', set); set();
   });
 
+  /* ---------- Quote pop-up (header + hero CTAs) ---------- */
+  var modal = d.getElementById('quote-modal');
+  if (modal) {
+    var panel = modal.querySelector('.modal__panel');
+    var lastFocus = null;
+    var focusables = function () {
+      return Array.prototype.filter.call(modal.querySelectorAll('a[href],button:not([disabled]),input:not([type=hidden]),select,textarea,[tabindex]:not([tabindex="-1"])'), function (el) { return el.offsetParent !== null; });
+    };
+    var openModal = function (trigger) {
+      lastFocus = trigger || d.activeElement;
+      if (burger && d.body.classList.contains('nav-open')) burger.click();
+      modal.hidden = false;
+      d.body.classList.add('modal-open');
+      /* next frame so the transition runs from the hidden state */
+      requestAnimationFrame(function () { requestAnimationFrame(function () { modal.classList.add('is-open'); }); });
+      var first = modal.querySelector('input:not([type=hidden])');
+      setTimeout(function () { (first || panel).focus({ preventScroll: true }); }, reduce ? 0 : 200);
+      try { w.dataLayer = w.dataLayer || []; w.dataLayer.push({ event: 'quote_popup_open', source: trigger && trigger.closest('header') ? 'header' : 'hero' }); } catch (err) {}
+    };
+    var closeModal = function () {
+      if (modal.hidden) return;
+      modal.classList.remove('is-open');
+      d.body.classList.remove('modal-open');
+      var done = function () { modal.hidden = true; if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true }); };
+      if (reduce) done(); else setTimeout(done, 260);
+    };
+    d.addEventListener('click', function (e) {
+      var opener = e.target.closest ? e.target.closest('[data-open-quote]') : null;
+      if (opener) { e.preventDefault(); openModal(opener); return; }
+      if (e.target.closest && e.target.closest('[data-close-quote]')) { e.preventDefault(); closeModal(); }
+    });
+    d.addEventListener('keydown', function (e) {
+      if (modal.hidden) return;
+      if (e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
+      if (e.key === 'Tab') {
+        var f = focusables(); if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && (d.activeElement === first || d.activeElement === panel)) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && d.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    /* Deep link: /contact/#quote from a page without an inline form still works; ?quote=1 opens the pop-up */
+    if (/[?&]quote=1/.test(w.location.search)) openModal(null);
+  }
+
   /* ---------- Quote forms ----------
      There is no form endpoint: the LeadConnector tracking script (loaded in <head>) reads the
      fields when the form is submitted and pushes the lead into the CRM. Our job is to validate,

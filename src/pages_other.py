@@ -25,7 +25,7 @@ def about():
         <span class="gold-rule" aria-hidden="true"></span>
         <p class="lead">Green Estates Gardening is a Wamuran-based, owner-operated lawn and garden business. We are the local gardeners Moreton Bay and Somerset property owners have trusted for reliable mowing, hedging, cleanups and mulching, with more than 13 years of hands-on experience behind every visit.</p>
         <div class="btn-row hero__cta">
-          <a href="/contact/#quote" class="btn btn--primary btn--lg">Get a Free Quote {icon("arrow")}</a>
+          <a href="/contact/#quote" class="btn btn--primary btn--lg" data-open-quote>Get a Free Quote {icon("arrow")}</a>
           <a href="tel:{SITE['phone_tel']}" class="btn btn--secondary btn--lg">{icon("phone")} {SITE['phone']}</a>
         </div>
         {trust_strip()}
