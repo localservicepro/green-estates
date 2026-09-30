@@ -146,10 +146,6 @@ def header(current="/"):
   </div>
   <p class="m-nap">{SITE['legal']} · Wamuran QLD 4512 · {SITE['hours']}</p>
 </div>
-<div class="callbar" aria-label="Quick actions">
-  <a href="tel:{SITE['phone_tel']}" class="btn btn--secondary">{icon("phone")} Call now</a>
-  <a href="/contact/#quote" class="btn btn--primary">Free quote</a>
-</div>
 '''
 
 def footer():
