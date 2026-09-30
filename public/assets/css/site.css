@@ -78,7 +78,7 @@ strong{font-weight:600}
 .on-dark .btn--secondary:hover,.hero .btn--secondary:hover,.section--dark .btn--secondary:hover{background:rgba(249,250,247,.1);color:var(--c-light)}
 .btn--lg{min-height:56px;padding:0 32px;font-size:1.02rem}
 .btn--block{width:100%}
-.btn[disabled],.btn.is-loading{opacity:.7;cursor:progress;transform:none}
+.btn[disabled],.btn.is-loading{opacity:.7;cursor:progress;transform:none;pointer-events:none}
 .btn-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
 
 /* ---------- Header ---------- */
@@ -198,7 +198,6 @@ body.nav-open{overflow:hidden}
 .form-summary.show{display:block}
 .form-summary a{color:inherit;font-weight:600}
 .form-fine{font-size:.82rem;color:var(--g-400);margin-top:12px;text-align:center}
-.hp{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden}
 
 /* ---------- Sections ---------- */
 .section{padding:clamp(64px,8vw,112px) 0;position:relative}

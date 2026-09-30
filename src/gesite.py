@@ -240,7 +240,7 @@ def quote_form(form_id="quote", preselect=None, title="Get your free quote", int
 <div class="quote-card" id="{p}">
   <h2>{esc(title)}</h2>
   <p class="form-intro">{esc(intro)}</p>
-  <form data-quote-form="{p}" action="/thank-you/" method="post" data-redirect="/thank-you/" novalidate>
+  <form data-quote-form="{p}" action="/thank-you/" method="get" data-redirect="/thank-you/" novalidate>
     <div class="form-summary" role="alert" aria-live="assertive"></div>
     <input type="hidden" name="source_page" value="{esc(source)}">
     <div class="field-row">
@@ -254,7 +254,6 @@ def quote_form(form_id="quote", preselect=None, title="Get your free quote", int
       <div class="field"><label for="{p}-service">Service needed</label><select id="{p}-service" name="service_needed" required>{opts(SERVICE_OPTIONS, preselect)}</select><span class="error" aria-live="polite"></span></div>
     </div>
     <div class="field"><label for="{p}-notes">Job notes <span class="opt">(optional)</span></label><textarea id="{p}-notes" name="job_notes" rows="3" placeholder="Anything we should know — gates, slopes, how overgrown it is, how often you'd like us"></textarea></div>
-    <div class="hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>
     <button type="submit" class="btn btn--primary btn--lg btn--block">{esc(button)} {icon("arrow")}</button>
     <p class="form-fine">We reply within one business day, Mon–Sat. Or call <a href="tel:{SITE['phone_tel']}">{SITE['phone']}</a>.</p>
   </form>

@@ -40,7 +40,7 @@ for (const [label, vp, mobile] of [['desktop', { width: 1440, height: 900 }, fal
   await page.goto(base + '/', { waitUntil: 'networkidle' });
   await page.hover('.nav-trigger');
   await page.waitForTimeout(400);
-  const ddVisible = await page.locator('.dropdown-panel').isVisible();
+  const ddVisible = await page.locator('#services-menu').isVisible();
   await page.screenshot({ path: `${out}/desktop-dropdown.png` });
   // header frosted after scroll
   await page.evaluate(() => window.scrollTo(0, 600)); await page.waitForTimeout(400);

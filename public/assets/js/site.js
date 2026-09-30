@@ -69,10 +69,14 @@
     range.addEventListener('input', set); set();
   });
 
-  /* ---------- Quote forms ---------- */
-  d.querySelectorAll('form[data-quote-form]').forEach(function (form) {
-    var summary = form.querySelector('.form-summary');
-    var btn = form.querySelector('button[type=submit]');
+  /* ---------- Quote forms ----------
+     There is no form endpoint: the LeadConnector tracking script (loaded in <head>) reads the
+     fields when the form is submitted and pushes the lead into the CRM. Our job is to validate,
+     let the submit event fire so that script can see it, stop the browser's own navigation, and
+     then send the visitor to the thank-you page. Every hook below is registered in the capture
+     phase on window so it runs before anything else on the page and cannot be swallowed. */
+  var quoteForms = Array.prototype.slice.call(d.querySelectorAll('form[data-quote-form]'));
+  if (quoteForms.length) {
     var msgs = {
       full_name: 'Please tell us your name.',
       email: 'Please enter a valid email address.',
@@ -80,62 +84,100 @@
       property_address: 'Please enter the property address or suburb.',
       service_needed: 'Please choose the service you need.'
     };
-    function fieldWrap(el) { return el.closest('.field'); }
-    function showError(el) {
+    var fieldWrap = function (el) { return el.closest ? el.closest('.field') : null; };
+    var showError = function (el) {
       var fw = fieldWrap(el); if (!fw) return;
       fw.classList.add('has-error');
       var err = fw.querySelector('.error'); if (err) err.textContent = msgs[el.name] || 'Please complete this field.';
       el.setAttribute('aria-invalid', 'true');
-    }
-    function clearError(el) {
+    };
+    var clearError = function (el) {
       var fw = fieldWrap(el); if (!fw) return;
       fw.classList.remove('has-error'); el.removeAttribute('aria-invalid');
-    }
-    form.setAttribute('novalidate', '');
-    form.querySelectorAll('input,select,textarea').forEach(function (el) {
-      el.addEventListener('input', function () { if (el.checkValidity()) clearError(el); });
-      el.addEventListener('change', function () { if (el.checkValidity()) clearError(el); });
-    });
-    form.addEventListener('submit', function (e) {
-      try {
+    };
+    var validate = function (form) {
       var invalid = [];
-      form.querySelectorAll('input,select,textarea').forEach(function (el) {
-        if (el.closest('.hp')) return;
-        if (!el.checkValidity()) { invalid.push(el); showError(el); } else { clearError(el); }
+      Array.prototype.forEach.call(form.querySelectorAll('input,select,textarea'), function (el) {
+        var ok = true;
+        try { ok = el.checkValidity(); } catch (err) { ok = true; }
+        if (!ok) { invalid.push(el); showError(el); } else { clearError(el); }
       });
-      var hp = form.querySelector('.hp input');
-      if (hp && hp.value) { e.preventDefault(); return; }
+      var summary = form.querySelector('.form-summary');
       if (invalid.length) {
-        e.preventDefault();
         if (summary) {
           summary.innerHTML = '<strong>Please check the highlighted fields.</strong> ' + invalid.map(function (el) {
             var lab = form.querySelector('label[for="' + el.id + '"]');
             return '<a href="#' + el.id + '">' + (lab ? lab.textContent.replace('(optional)', '').trim() : el.name) + '</a>';
           }).join(' · ');
           summary.classList.add('show');
-          summary.setAttribute('tabindex', '-1'); summary.focus();
+          summary.setAttribute('tabindex', '-1');
         }
-        invalid[0].focus();
-        return;
+      } else if (summary) {
+        summary.classList.remove('show');
       }
-      /* Valid: the GHL tracking script listens to this submit event and records the fields.
-         We stop the browser navigation, give the beacon a moment, then go to the thank-you page.
-         The redirect is scheduled first so nothing that follows can prevent it. */
-      e.preventDefault();
-      var next = form.getAttribute('data-redirect') || '/thank-you/';
-      if (form.dataset.sent) return;
-      form.dataset.sent = '1';
-      var go = function () { try { w.location.assign(next); } catch (err) { w.location.href = next; } };
-      var timer = setTimeout(go, 900);
+      return invalid;
+    };
+    var target = function (form) { return form.getAttribute('data-redirect') || '/thank-you/'; };
+    var sendAndRedirect = function (form) {
+      if (form.__geSent) return;
+      form.__geSent = true;
+      var next = target(form);
+      var btn = form.querySelector('button[type=submit]');
       try {
-        if (summary) summary.classList.remove('show');
-        if (btn) { btn.classList.add('is-loading'); btn.setAttribute('disabled', ''); btn.innerHTML = 'Sending…'; }
+        if (btn) { btn.classList.add('is-loading'); btn.setAttribute('aria-busy', 'true'); btn.innerHTML = 'Sending…'; }
         w.dataLayer = w.dataLayer || [];
         w.dataLayer.push({ event: 'quote_form_submit', form_name: form.getAttribute('data-quote-form') });
-      } catch (err) { clearTimeout(timer); go(); }
-      } catch (fatal) { e.preventDefault(); w.location.href = form.getAttribute('data-redirect') || '/thank-you/'; }
+      } catch (err) { /* cosmetic only */ }
+      /* Give the tracking beacon a moment, then leave. Two timers so a blocked assign() still redirects. */
+      setTimeout(function () { try { w.location.assign(next); } catch (err) { w.location.href = next; } }, 700);
+      setTimeout(function () { w.location.href = next; }, 2500);
+    };
+    var findForm = function (node) {
+      while (node && node !== d) { if (node.matches && node.matches('form[data-quote-form]')) return node; node = node.parentNode; }
+      return null;
+    };
+    quoteForms.forEach(function (form) {
+      form.setAttribute('novalidate', '');
+      Array.prototype.forEach.call(form.querySelectorAll('input,select,textarea'), function (el) {
+        var maybeClear = function () { try { if (el.checkValidity()) clearError(el); } catch (err) {} };
+        el.addEventListener('input', maybeClear);
+        el.addEventListener('change', maybeClear);
+      });
     });
-  });
+    /* 1. Submit (button click or Enter key). Capture phase on window: first listener to run. */
+    w.addEventListener('submit', function (e) {
+      var form = findForm(e.target); if (!form) return;
+      try {
+        var invalid = validate(form);
+        if (invalid.length) {
+          e.preventDefault(); e.stopImmediatePropagation();
+          var summary = form.querySelector('.form-summary'); if (summary) summary.focus();
+          invalid[0].focus();
+          return;
+        }
+        e.preventDefault(); /* no native navigation; the event keeps bubbling for the tracking script */
+        sendAndRedirect(form);
+      } catch (fatal) { e.preventDefault(); w.location.href = target(form); }
+    }, true);
+    /* 2. Belt and braces: the submit button click itself. If any other script cancels the submit
+          event, this still gets a valid form through to the thank-you page. */
+    w.addEventListener('click', function (e) {
+      var node = e.target;
+      while (node && node !== d && !(node.tagName === 'BUTTON' || node.tagName === 'INPUT')) node = node.parentNode;
+      if (!node || node === d || (node.getAttribute('type') || 'submit').toLowerCase() !== 'submit') return;
+      var form = node.form || findForm(node); if (!form || !findForm(form)) return;
+      try {
+        if (validate(form).length) return; /* let the submit handler above show the summary and focus */
+        /* Valid: let the click go on to fire submit (so the tracking script sees it) and start the redirect now. */
+        setTimeout(function () { if (!form.__geSent) sendAndRedirect(form); }, 50);
+      } catch (fatal) { w.location.href = target(form); }
+    }, true);
+  }
+
+  /* Thank-you page: if a no-JS or third-party submit landed here with fields in the query string, tidy the URL. */
+  if (/^\/thank-you\/?$/.test(w.location.pathname) && w.location.search && w.history && w.history.replaceState) {
+    try { w.history.replaceState(null, '', w.location.pathname); } catch (err) {}
+  }
 
   /* ---------- Year ---------- */
   d.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
