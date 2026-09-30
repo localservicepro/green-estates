@@ -10,18 +10,21 @@
   function onScroll() { if (header) header.classList.toggle('scrolled', w.scrollY > 40); }
   w.addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  /* Services mega-dropdown: hover on pointer devices, click everywhere */
-  var dd = d.querySelector('.nav-dropdown');
-  if (dd) {
+  /* Mega-dropdowns (Services, Areas): hover on pointer devices, click everywhere */
+  var dds = Array.prototype.slice.call(d.querySelectorAll('.nav-dropdown'));
+  var hoverCapable = w.matchMedia('(hover: hover)').matches;
+  var closeAll = function (except) { dds.forEach(function (x) { if (x !== except) { x.classList.remove('open'); x.querySelector('.nav-trigger').setAttribute('aria-expanded', 'false'); } }); };
+  dds.forEach(function (dd) {
     var trigger = dd.querySelector('.nav-trigger');
-    var hoverCapable = w.matchMedia('(hover: hover)').matches;
-    var openDd = function () { dd.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); };
+    var openDd = function () { closeAll(dd); dd.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); };
     var closeDd = function () { dd.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); };
     if (hoverCapable) { dd.addEventListener('mouseenter', openDd); dd.addEventListener('mouseleave', closeDd); }
     trigger.addEventListener('click', function (e) { e.preventDefault(); dd.classList.contains('open') ? closeDd() : openDd(); });
-    d.addEventListener('click', function (e) { if (!dd.contains(e.target)) closeDd(); });
-    d.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeDd(); });
     dd.addEventListener('focusout', function (e) { if (!dd.contains(e.relatedTarget)) closeDd(); });
+  });
+  if (dds.length) {
+    d.addEventListener('click', function (e) { if (!dds.some(function (x) { return x.contains(e.target); })) closeAll(); });
+    d.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
   }
 
   /* Mobile nav */
@@ -39,15 +42,15 @@
     burger.addEventListener('click', function () { setOpen(!mnav.classList.contains('open')); });
     d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mnav.classList.contains('open')) setOpen(false); });
     mnav.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
-    var acc = mnav.querySelector('.m-acc');
-    if (acc) {
-      var sub = mnav.querySelector('.m-sub');
+    mnav.querySelectorAll('.m-acc').forEach(function (acc) {
+      var sub = d.getElementById(acc.getAttribute('aria-controls'));
+      if (!sub) return;
       acc.addEventListener('click', function () {
         var open = acc.getAttribute('aria-expanded') === 'true';
         acc.setAttribute('aria-expanded', String(!open));
         sub.classList.toggle('open', !open);
       });
-    }
+    });
     w.matchMedia('(min-width: 1024px)').addEventListener('change', function (e) { if (e.matches) setOpen(false); });
   }
 

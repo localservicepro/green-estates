@@ -478,3 +478,18 @@ a.card h3{text-decoration:none}
 .hub-others{margin-top:48px;padding-top:32px;border-top:1px solid var(--g-200)}
 .hub-others h3{font-size:1.1rem}
 .section--white .chips li{border-color:var(--g-300);background:var(--c-light);color:var(--c-dark)}
+
+/* Areas mega menu */
+.dropdown-panel--wide{width:720px;max-width:calc(100vw - 32px);padding:18px 18px 10px}
+.dd-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:8px 18px;padding:0 6px 10px;border-bottom:1px solid var(--g-200);margin-bottom:6px}
+.dd-col h5{margin:6px 0 8px;font-family:var(--font-display);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--c-primary)}
+.dd-link{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:7px 8px;border-radius:8px;text-decoration:none;color:var(--c-dark);font-weight:600;font-size:.92rem;transition:background var(--dur),transform var(--dur)}
+.dd-link small{font-weight:400;font-size:.74rem;color:var(--g-400);white-space:nowrap}
+.dd-link:hover{background:rgba(76,175,40,.08);transform:translateX(2px);color:var(--c-dark)}
+.dd-all{margin-top:2px}
+.m-sub--areas .m-group{padding:6px 4px 10px}
+.m-sub--areas .m-group strong{display:block;font-family:var(--font-display);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--c-accent);margin:8px 0 6px}
+.m-sub--areas .m-group a{display:flex;justify-content:space-between;padding:8px 4px;font-size:1rem;border-bottom:1px solid rgba(249,250,247,.08)}
+.m-sub--areas .m-group a span{color:rgba(249,250,247,.55);font-size:.82rem}
+.m-sub--areas .m-all{display:inline-flex;align-items:center;gap:8px;margin:12px 4px 4px;font-family:var(--font-display);font-weight:800;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase}
+.m-sub--areas .m-all svg{width:16px;height:16px}

@@ -50,6 +50,7 @@ SERVICES = [
 ]
 SERVICE_BY_SLUG = {s["slug"]: s for s in SERVICES}
 SUBURB_LINKS = {}  # filled by build.py from suburbs.LIVE
+AREA_GROUPS = []   # filled by build.py: [(group_name, [(suburb, kind, path), ...]), ...]
 
 ICONS = {
     "grid": '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg>',
@@ -100,6 +101,26 @@ def header(current="/"):
     for s in SERVICES:
         dd_items.append(f'<a class="dd-item" role="menuitem" href="/{s["slug"]}/"><span class="dd-icon">{icon(s["icon"])}</span><span class="dd-text"><strong>{esc(s["card"])}</strong><em>{esc(s["descriptor"])}</em></span></a>')
     dd = "\n".join(dd_items)
+    if AREA_GROUPS:
+        cols = []
+        for gname, items in AREA_GROUPS:
+            links = "".join(f'<a class="dd-link" role="menuitem" href="{path}">{esc(name)}<small>{"Garden maintenance" if kind == "garden" else "Lawn mowing"}</small></a>' for name, kind, path in items)
+            cols.append(f'<div class="dd-col"><h5>{esc(gname)}</h5>{links}</div>')
+        areas_dd = f'''<div class="nav-dropdown nav-dropdown--areas">
+        <button class="nav-link nav-trigger" aria-expanded="false" aria-controls="areas-menu" aria-haspopup="true">Areas
+          <svg class="caret" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <div class="dropdown-panel dropdown-panel--wide" id="areas-menu" role="menu">
+          <div class="dd-cols">{"".join(cols)}</div>
+          <a class="dd-item dd-all" role="menuitem" href="/service-areas/"><span class="dd-icon">{icon("pin")}</span><span class="dd-text"><strong>All service areas</strong><em>Moreton Bay &amp; Somerset, from Bribie Island to Kilcoy</em></span></a>
+        </div>
+      </div>'''
+        m_areas = "".join(f'<div class="m-group"><strong>{esc(gname)}</strong>' + "".join(f'<a href="{path}">{esc(name)}<span>{"garden" if kind == "garden" else "lawns"}</span></a>' for name, kind, path in items) + '</div>' for gname, items in AREA_GROUPS)
+        m_areas_block = f'''<button class="m-link m-acc" aria-expanded="false" aria-controls="m-areas">Service Areas <svg class="caret" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <div class="m-sub m-sub--areas" id="m-areas">{m_areas}<a class="m-all" href="/service-areas/">All service areas {icon("arrow")}</a></div>'''
+    else:
+        areas_dd = '<a href="/service-areas/" class="nav-link">Areas</a>'
+        m_areas_block = '<a class="m-link" href="/service-areas/">Service Areas</a>'
     m_items = "\n".join(
         f'<a class="dd-item" href="/{s["slug"]}/"><span class="dd-icon">{icon(s["icon"])}</span><span class="dd-text"><strong>{esc(s["card"])}</strong><em>{esc(s["descriptor"])}</em></span></a>' for s in SERVICES)
     return f'''
@@ -119,7 +140,7 @@ def header(current="/"):
         <div class="dropdown-panel" id="services-menu" role="menu">{dd}</div>
       </div>
       <a href="/about/" class="nav-link">About</a>
-      <a href="/service-areas/" class="nav-link">Areas</a>
+      {areas_dd}
       <a href="/blog/" class="nav-link">Blog</a>
       <a href="/contact/" class="nav-link">Contact</a>
     </nav>
@@ -136,7 +157,7 @@ def header(current="/"):
     <button class="m-link m-acc" aria-expanded="false" aria-controls="m-services">Services <svg class="caret" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
     <div class="m-sub" id="m-services">{m_items}</div>
     <a class="m-link" href="/about/">About</a>
-    <a class="m-link" href="/service-areas/">Service Areas</a>
+    {m_areas_block}
     <a class="m-link" href="/blog/">Blog</a>
     <a class="m-link" href="/contact/">Contact</a>
   </nav>

@@ -11,6 +11,7 @@ PUB = os.path.join(ROOT, "public")
 
 POSTS = blog_posts.POSTS
 gesite.SUBURB_LINKS.update({s['name']: s['path'] for s in suburbs.LIVE if s['kind'] == 'lawn'})
+gesite.AREA_GROUPS[:] = [(gname, [(s['name'], s['kind'], s['path']) for s in suburbs.LIVE if s['group'] == key]) for key, gname, _ in suburbs.GROUPS]
 pages_home.BLOG_TEASER = blog.blog_teaser_section(POSTS)
 PAGES = [pages_home.home(), pages_services.lawn_mowing(), pages_services.hedge_trimming(),
          pages_services.garden_cleanup(), pages_services.mulching(), pages_other.about(),
