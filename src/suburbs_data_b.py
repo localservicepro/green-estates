@@ -6,7 +6,7 @@ radius with Hamish before publishing. Flip CONFIRMED_RADIUS in suburbs.py to pub
 SUBURBS_B = [
 dict(
     path="/service-areas/lawn-mowing-burpengary/", name="Burpengary", keyword="Lawn Mowing Burpengary", kind="lawn", region="mb", group="corridor",
-    neighbours=["/blog/lawn-mowing-morayfield/", "/blog/lawn-mowing-narangba/"], image="commercial-lawn-mowing-units",
+    neighbours=["/service-areas/lawn-mowing-morayfield/", "/service-areas/lawn-mowing-narangba/"], image="commercial-lawn-mowing-units",
     alt="Lawn mowing Burpengary: mown lawn and tidy frontage at a modern property",
     h1="Lawn Mowing Burpengary: North Harbour Estates to Acreage in Burpengary West", h1_plain="Lawn Mowing Burpengary: North Harbour Estates to Acreage in Burpengary West",
     title="Lawn Mowing Burpengary | Green Estates Gardening",
@@ -38,7 +38,7 @@ dict(
 ),
 dict(
     path="/service-areas/lawn-mowing-deception-bay/", name="Deception Bay", keyword="Lawn Mowing Deception Bay", kind="lawn", region="mb", group="coast", flagged=True,
-    neighbours=["/service-areas/lawn-mowing-beachmere/", "/blog/lawn-mowing-redcliffe/"], image="freshly-mown-lawn-redcliffe",
+    neighbours=["/service-areas/lawn-mowing-beachmere/", "/service-areas/lawn-mowing-redcliffe/"], image="freshly-mown-lawn-redcliffe",
     alt="Lawn mowing Deception Bay: freshly cut coastal lawn and nature strip",
     h1="Lawn Mowing Deception Bay: Bayside Blocks, Older Homes &amp; Rentals Done Right", h1_plain="Lawn Mowing Deception Bay: Bayside Blocks, Older Homes & Rentals Done Right",
     title="Lawn Mowing Deception Bay | Green Estates Gardening",
@@ -65,7 +65,7 @@ dict(
 ),
 dict(
     path="/service-areas/lawn-mowing-wamuran/", name="Wamuran", keyword="Lawn Mowing Wamuran", kind="lawn", region="mb", group="acreage",
-    neighbours=["/service-areas/lawn-mowing-daguilar/", "/blog/lawn-mowing-caboolture/"], image="ride-on-mower-acreage-wamuran",
+    neighbours=["/service-areas/lawn-mowing-daguilar/", "/service-areas/lawn-mowing-caboolture/"], image="ride-on-mower-acreage-wamuran",
     alt="Lawn mowing Wamuran: zero-turn ride-on mowing an acreage block under gum trees",
     h1="Lawn Mowing Wamuran: Acreage &amp; Ride-On Mowing From Your Local Crew", h1_plain="Lawn Mowing Wamuran: Acreage & Ride-On Mowing From Your Local Crew",
     title="Lawn Mowing Wamuran | Green Estates Gardening",
@@ -124,7 +124,7 @@ dict(
 ),
 dict(
     path="/service-areas/lawn-mowing-beachmere/", name="Beachmere", keyword="Lawn Mowing Beachmere", kind="lawn", region="mb", group="coast",
-    neighbours=["/blog/lawn-mowing-bribie-island/", "/blog/lawn-mowing-caboolture/"], image="garden-cleanup-tidy-yard",
+    neighbours=["/service-areas/lawn-mowing-bribie-island/", "/service-areas/lawn-mowing-caboolture/"], image="garden-cleanup-tidy-yard",
     alt="Lawn mowing Beachmere: tidy front lawn and footpath at a coastal village home",
     h1="Lawn Mowing Beachmere: Coastal Village Lawns on a Regular Round", h1_plain="Lawn Mowing Beachmere: Coastal Village Lawns on a Regular Round",
     title="Lawn Mowing Beachmere | Green Estates Gardening",
@@ -151,7 +151,7 @@ dict(
 ),
 dict(
     path="/service-areas/lawn-mowing-petrie/", name="Petrie", keyword="Lawn Mowing Petrie", kind="lawn", region="mb", group="corridor", flagged=True,
-    neighbours=["/service-areas/lawn-mowing-kallangur/", "/blog/lawn-mowing-strathpine/"], image="walkway-mowing-edging",
+    neighbours=["/service-areas/lawn-mowing-kallangur/", "/service-areas/lawn-mowing-strathpine/"], image="walkway-mowing-edging",
     alt="Lawn mowing Petrie: mown lawn and edged path at an established home",
     h1="Lawn Mowing Petrie: Established Lawns Near the River, the Mill &amp; the Station", h1_plain="Lawn Mowing Petrie: Established Lawns Near the River, the Mill & the Station",
     title="Lawn Mowing Petrie | Green Estates Gardening",
@@ -178,7 +178,7 @@ dict(
 ),
 dict(
     path="/service-areas/lawn-mowing-kallangur/", name="Kallangur", keyword="Lawn Mowing Kallangur", kind="lawn", region="mb", group="corridor", flagged=True,
-    neighbours=["/service-areas/lawn-mowing-petrie/", "/blog/lawn-mowing-north-lakes/"], image="push-mowing-residential-lawn",
+    neighbours=["/service-areas/lawn-mowing-petrie/", "/service-areas/lawn-mowing-north-lakes/"], image="push-mowing-residential-lawn",
     alt="Lawn mowing Kallangur: push mower on a neat suburban front lawn",
     h1="Lawn Mowing Kallangur: Family Blocks, Rentals &amp; Older Lawns on a Set Day", h1_plain="Lawn Mowing Kallangur: Family Blocks, Rentals & Older Lawns on a Set Day",
     title="Lawn Mowing Kallangur | Green Estates Gardening",

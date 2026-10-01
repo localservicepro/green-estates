@@ -43,48 +43,93 @@
       "statusCode": 301
     },
     {
-      "source": "/blog/lawn-mowing-north-lakes",
-      "destination": "/blog/lawn-mowing-north-lakes/",
+      "source": "/blog/lawn-mowing-caboolture",
+      "destination": "/service-areas/lawn-mowing-caboolture/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/lawn-mowing-caboolture/",
+      "destination": "/service-areas/lawn-mowing-caboolture/",
       "statusCode": 301
     },
     {
       "source": "/blog/lawn-mowing-redcliffe",
-      "destination": "/blog/lawn-mowing-redcliffe/",
+      "destination": "/service-areas/lawn-mowing-redcliffe/",
       "statusCode": 301
     },
     {
-      "source": "/blog/lawn-mowing-caboolture",
-      "destination": "/blog/lawn-mowing-caboolture/",
+      "source": "/blog/lawn-mowing-redcliffe/",
+      "destination": "/service-areas/lawn-mowing-redcliffe/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/lawn-mowing-north-lakes",
+      "destination": "/service-areas/lawn-mowing-north-lakes/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/lawn-mowing-north-lakes/",
+      "destination": "/service-areas/lawn-mowing-north-lakes/",
       "statusCode": 301
     },
     {
       "source": "/blog/lawn-mowing-morayfield",
-      "destination": "/blog/lawn-mowing-morayfield/",
+      "destination": "/service-areas/lawn-mowing-morayfield/",
       "statusCode": 301
     },
     {
-      "source": "/blog/lawn-mowing-bribie-island",
-      "destination": "/blog/lawn-mowing-bribie-island/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/garden-maintenance-north-lakes",
-      "destination": "/blog/garden-maintenance-north-lakes/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/lawn-mowing-narangba",
-      "destination": "/blog/lawn-mowing-narangba/",
-      "statusCode": 301
-    },
-    {
-      "source": "/blog/garden-maintenance-redcliffe",
-      "destination": "/blog/garden-maintenance-redcliffe/",
+      "source": "/blog/lawn-mowing-morayfield/",
+      "destination": "/service-areas/lawn-mowing-morayfield/",
       "statusCode": 301
     },
     {
       "source": "/blog/lawn-mowing-strathpine",
-      "destination": "/blog/lawn-mowing-strathpine/",
+      "destination": "/service-areas/lawn-mowing-strathpine/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/lawn-mowing-strathpine/",
+      "destination": "/service-areas/lawn-mowing-strathpine/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/lawn-mowing-narangba",
+      "destination": "/service-areas/lawn-mowing-narangba/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/lawn-mowing-narangba/",
+      "destination": "/service-areas/lawn-mowing-narangba/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/lawn-mowing-bribie-island",
+      "destination": "/service-areas/lawn-mowing-bribie-island/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/lawn-mowing-bribie-island/",
+      "destination": "/service-areas/lawn-mowing-bribie-island/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/garden-maintenance-north-lakes",
+      "destination": "/service-areas/garden-maintenance-north-lakes/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/garden-maintenance-north-lakes/",
+      "destination": "/service-areas/garden-maintenance-north-lakes/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/garden-maintenance-redcliffe",
+      "destination": "/service-areas/garden-maintenance-redcliffe/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/garden-maintenance-redcliffe/",
+      "destination": "/service-areas/garden-maintenance-redcliffe/",
       "statusCode": 301
     },
     {

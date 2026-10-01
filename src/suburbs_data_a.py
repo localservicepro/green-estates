@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Suburb landing pages that already exist on the live site (URLs preserved under /blog/ per the strategy doc)."""
+"""Suburb landing pages that existed on the old site under /blog/. Moved to /service-areas/ on 1 Oct 2026 (Ryan);
+every old /blog/ URL 301s to the new path, see vercel.json / netlify.toml."""
 
 SUBURBS_A = [
 dict(
-    path="/blog/lawn-mowing-caboolture/", name="Caboolture", keyword="Lawn Mowing Caboolture", kind="lawn", region="mb", group="corridor",
-    neighbours=["/blog/lawn-mowing-morayfield/", "/service-areas/lawn-mowing-wamuran/"], image="push-mowing-residential-lawn",
+    path="/service-areas/lawn-mowing-caboolture/", name="Caboolture", keyword="Lawn Mowing Caboolture", kind="lawn", region="mb", group="corridor",
+    neighbours=["/service-areas/lawn-mowing-morayfield/", "/service-areas/lawn-mowing-wamuran/"], image="push-mowing-residential-lawn",
     alt="Lawn mowing Caboolture: push mower on a freshly cut residential lawn",
     h1="Lawn Mowing Caboolture: Reliable Fortnightly Mowing for Homes, Rentals &amp; Acreage", h1_plain="Lawn Mowing Caboolture: Reliable Fortnightly Mowing for Homes, Rentals & Acreage",
     title="Lawn Mowing Caboolture | Green Estates Gardening", 
@@ -35,8 +36,8 @@ dict(
     ],
 ),
 dict(
-    path="/blog/lawn-mowing-redcliffe/", name="Redcliffe", keyword="Lawn Mowing Redcliffe", kind="lawn", region="mb", group="coast",
-    neighbours=["/blog/garden-maintenance-redcliffe/", "/blog/lawn-mowing-north-lakes/"], image="freshly-mown-lawn-redcliffe",
+    path="/service-areas/lawn-mowing-redcliffe/", name="Redcliffe", keyword="Lawn Mowing Redcliffe", kind="lawn", region="mb", group="coast",
+    neighbours=["/service-areas/garden-maintenance-redcliffe/", "/service-areas/lawn-mowing-north-lakes/"], image="freshly-mown-lawn-redcliffe",
     alt="Lawn mowing Redcliffe: freshly mown and edged nature strip on the peninsula",
     h1="Lawn Mowing Redcliffe: Salt-Tolerant Lawn Care for the Peninsula", h1_plain="Lawn Mowing Redcliffe: Salt-Tolerant Lawn Care for the Peninsula",
     title="Lawn Mowing Redcliffe | Green Estates Gardening",
@@ -62,8 +63,8 @@ dict(
     ],
 ),
 dict(
-    path="/blog/lawn-mowing-north-lakes/", name="North Lakes", keyword="Lawn Mowing North Lakes", kind="lawn", region="mb", group="corridor",
-    neighbours=["/blog/garden-maintenance-north-lakes/", "/blog/lawn-mowing-narangba/"], image="push-mower-front-lawn-north-lakes",
+    path="/service-areas/lawn-mowing-north-lakes/", name="North Lakes", keyword="Lawn Mowing North Lakes", kind="lawn", region="mb", group="corridor",
+    neighbours=["/service-areas/garden-maintenance-north-lakes/", "/service-areas/lawn-mowing-narangba/"], image="push-mower-front-lawn-north-lakes",
     alt="Lawn mowing North Lakes: push mower on a neat front lawn in a modern estate",
     h1="Lawn Mowing North Lakes: Estate-Standard Lawns, Fortnightly &amp; Fixed Price", h1_plain="Lawn Mowing North Lakes: Estate-Standard Lawns, Fortnightly & Fixed Price",
     title="Lawn Mowing North Lakes | Green Estates Gardening",
@@ -75,7 +76,7 @@ dict(
 <p>A typical North Lakes block is 350 to 600 square metres with a front lawn, a strip down the side and a back yard that has to share space with a patio, a pool or a trampoline. It is push-mower territory, and the details are what separate a good job from an average one: edges cut cleanly along the exposed-aggregate driveway, the line around the letterbox and the street tree, no clippings on the footpath, and the buffalo left long enough to stay thick. Sir Walter, Palmetto and Sapphire dominate here, and they are all damaged by being cut short, so we run the deck at 50 to 60 millimetres through summer.</p>
 <p>Lake Eden, the Westfield precinct and the newer stages towards Mango Hill and Capestone all share the same character, and the same watering restrictions apply, so we also keep an eye on lawn grub and fungal patches in February, which show up first on the shaded south side of two-storey homes.</p>
 <h2>Body corporates and rentals in North Lakes</h2>
-<p>North Lakes has a high proportion of townhouse complexes and investment properties. For body corporates we handle the common lawns, nature strips, hedges and garden beds on a scheduled round with one invoice and photos after each visit. For property managers we do routine mowing between inspections and end-of-lease tidy-ups, and we know what the entry report photo needs to look like. Our <a href="/blog/garden-maintenance-north-lakes/">garden maintenance North Lakes</a> page covers the hedge and garden bed side of the same job.</p>
+<p>North Lakes has a high proportion of townhouse complexes and investment properties. For body corporates we handle the common lawns, nature strips, hedges and garden beds on a scheduled round with one invoice and photos after each visit. For property managers we do routine mowing between inspections and end-of-lease tidy-ups, and we know what the entry report photo needs to look like. Our <a href="/service-areas/garden-maintenance-north-lakes/">garden maintenance North Lakes</a> page covers the hedge and garden bed side of the same job.</p>
 <h2>Included in every North Lakes mowing visit</h2>
 <p>Mowing at the correct height for buffalo, couch or zoysia, edging along paths, driveway and kerb, line trimming around fences, beds and utilities, catching and removing clippings, and a blow-down of the driveway, footpath and patio. Hedge trimming for the lilly pilly and murraya screens along most boundaries, weed treatment for bindii and nutgrass, and a spring mulch on the beds can be bundled into the same visit at a fixed price.</p>
 <h2>Why North Lakes chooses Green Estates</h2>
@@ -89,8 +90,8 @@ dict(
     ],
 ),
 dict(
-    path="/blog/lawn-mowing-morayfield/", name="Morayfield", keyword="Lawn Mowing Morayfield", kind="lawn", region="mb", group="corridor",
-    neighbours=["/blog/lawn-mowing-caboolture/", "/service-areas/lawn-mowing-burpengary/"], image="push-mower-striped-lawn-morayfield",
+    path="/service-areas/lawn-mowing-morayfield/", name="Morayfield", keyword="Lawn Mowing Morayfield", kind="lawn", region="mb", group="corridor",
+    neighbours=["/service-areas/lawn-mowing-caboolture/", "/service-areas/lawn-mowing-burpengary/"], image="push-mower-striped-lawn-morayfield",
     alt="Lawn mowing Morayfield: neatly striped residential lawn after a fortnightly cut",
     h1="Lawn Mowing Morayfield: Fortnightly Cuts for Estates, Rentals &amp; Older Blocks", h1_plain="Lawn Mowing Morayfield: Fortnightly Cuts for Estates, Rentals & Older Blocks",
     title="Lawn Mowing Morayfield | Green Estates Gardening",
@@ -117,8 +118,8 @@ dict(
     ],
 ),
 dict(
-    path="/blog/lawn-mowing-strathpine/", name="Strathpine", keyword="Lawn Mowing Strathpine", kind="lawn", region="mb", group="corridor",
-    neighbours=["/blog/lawn-mowing-north-lakes/", "/service-areas/lawn-mowing-petrie/"], image="footpath-edging-strathpine",
+    path="/service-areas/lawn-mowing-strathpine/", name="Strathpine", keyword="Lawn Mowing Strathpine", kind="lawn", region="mb", group="corridor",
+    neighbours=["/service-areas/lawn-mowing-north-lakes/", "/service-areas/lawn-mowing-petrie/"], image="footpath-edging-strathpine",
     alt="Lawn mowing Strathpine: crisp edging along a footpath on an established street",
     h1="Lawn Mowing Strathpine: Established Lawns, Big Trees &amp; Clean Edges", h1_plain="Lawn Mowing Strathpine: Established Lawns, Big Trees & Clean Edges",
     title="Lawn Mowing Strathpine | Green Estates Gardening",
@@ -144,8 +145,8 @@ dict(
     ],
 ),
 dict(
-    path="/blog/lawn-mowing-narangba/", name="Narangba", keyword="Lawn Mowing Narangba", kind="lawn", region="mb", group="corridor",
-    neighbours=["/service-areas/lawn-mowing-burpengary/", "/blog/lawn-mowing-north-lakes/"], image="walkway-mowing-edging",
+    path="/service-areas/lawn-mowing-narangba/", name="Narangba", keyword="Lawn Mowing Narangba", kind="lawn", region="mb", group="corridor",
+    neighbours=["/service-areas/lawn-mowing-burpengary/", "/service-areas/lawn-mowing-north-lakes/"], image="walkway-mowing-edging",
     alt="Lawn mowing Narangba: mown lawn and edged walkway at a family home",
     h1="Lawn Mowing Narangba: From Narangba Valley Estates to Acreage on Oakey Flat Road", h1_plain="Lawn Mowing Narangba: From Narangba Valley Estates to Acreage on Oakey Flat Road",
     title="Lawn Mowing Narangba | Green Estates Gardening",
@@ -175,8 +176,8 @@ dict(
     ],
 ),
 dict(
-    path="/blog/lawn-mowing-bribie-island/", name="Bribie Island", keyword="Lawn Mowing Bribie Island", kind="lawn", region="mb", group="coast",
-    neighbours=["/service-areas/lawn-mowing-beachmere/", "/blog/lawn-mowing-caboolture/"], image="freshly-mown-lawn-redcliffe",
+    path="/service-areas/lawn-mowing-bribie-island/", name="Bribie Island", keyword="Lawn Mowing Bribie Island", kind="lawn", region="mb", group="coast",
+    neighbours=["/service-areas/lawn-mowing-beachmere/", "/service-areas/lawn-mowing-caboolture/"], image="freshly-mown-lawn-redcliffe",
     alt="Lawn mowing Bribie Island: freshly mown coastal lawn and nature strip",
     h1="Lawn Mowing Bribie Island: Sandy Soils, Sea Air &amp; Low-Fuss Coastal Lawns", h1_plain="Lawn Mowing Bribie Island: Sandy Soils, Sea Air & Low-Fuss Coastal Lawns",
     title="Lawn Mowing Bribie Island | Green Estates Gardening",
@@ -202,8 +203,8 @@ dict(
     ],
 ),
 dict(
-    path="/blog/garden-maintenance-north-lakes/", name="North Lakes", keyword="Garden Maintenance North Lakes", kind="garden", region="mb", group="corridor",
-    neighbours=["/blog/lawn-mowing-north-lakes/", "/blog/garden-maintenance-redcliffe/"], image="hedge-trimming-townhouse-hedges",
+    path="/service-areas/garden-maintenance-north-lakes/", name="North Lakes", keyword="Garden Maintenance North Lakes", kind="garden", region="mb", group="corridor",
+    neighbours=["/service-areas/lawn-mowing-north-lakes/", "/service-areas/garden-maintenance-redcliffe/"], image="hedge-trimming-townhouse-hedges",
     alt="Garden maintenance North Lakes: trimmed hedges and tidy beds at a townhouse complex",
     h1="Garden Maintenance North Lakes: Hedges, Beds, Mulch &amp; Lawns on One Schedule", h1_plain="Garden Maintenance North Lakes: Hedges, Beds, Mulch & Lawns on One Schedule",
     title="Garden Maintenance North Lakes | Green Estates Gardening",
@@ -218,7 +219,7 @@ dict(
 <h2>Beds, mulch and weeds</h2>
 <p>North Lakes beds were mulched once, at handover, and most have never been topped up. We weed by hand, treat nutgrass and running weeds with a registered product at label rates, re-cut the bed edges so the buffalo stops creeping in, and lay hardwood or forest mulch in spring so the beds hold moisture through summer and stay weed-free. For lawns, bindii is treated in winter and lawn grub watched for in February.</p>
 <h2>Body corporates, rentals and busy households</h2>
-<p>Townhouse complexes from Lake Eden to Capestone put their common lawns, hedges, beds and entry plantings on our scheduled round with a single fixed price per visit and photos for the committee. Property managers use the same package between tenants. For owner-occupiers it means the covenant letter never arrives and the weekend is theirs. The mowing side of the package is covered in detail on our <a href="/blog/lawn-mowing-north-lakes/">lawn mowing North Lakes</a> page.</p>
+<p>Townhouse complexes from Lake Eden to Capestone put their common lawns, hedges, beds and entry plantings on our scheduled round with a single fixed price per visit and photos for the committee. Property managers use the same package between tenants. For owner-occupiers it means the covenant letter never arrives and the weekend is theirs. The mowing side of the package is covered in detail on our <a href="/service-areas/lawn-mowing-north-lakes/">lawn mowing North Lakes</a> page.</p>
 <h2>Why North Lakes chooses Green Estates</h2>
 <p>One local operator for everything the landscape needs, on a set day, at a fixed price, with no contract. Based in Wamuran and running North Lakes, Mango Hill, Griffin and Murrumba Downs as one round, we have kept estate gardens to covenant standard for more than 13 years.</p>
 """,
@@ -230,8 +231,8 @@ dict(
     ],
 ),
 dict(
-    path="/blog/garden-maintenance-redcliffe/", name="Redcliffe", keyword="Garden Maintenance Redcliffe", kind="garden", region="mb", group="coast",
-    neighbours=["/blog/lawn-mowing-redcliffe/", "/blog/garden-maintenance-north-lakes/"], image="garden-beds-trees-tidy",
+    path="/service-areas/garden-maintenance-redcliffe/", name="Redcliffe", keyword="Garden Maintenance Redcliffe", kind="garden", region="mb", group="coast",
+    neighbours=["/service-areas/lawn-mowing-redcliffe/", "/service-areas/garden-maintenance-north-lakes/"], image="garden-beds-trees-tidy",
     alt="Garden maintenance Redcliffe: tidy coastal garden beds and pruned shrubs beside a home",
     h1="Garden Maintenance Redcliffe: Coastal Hedges, Beds &amp; Lawns Kept on Schedule", h1_plain="Garden Maintenance Redcliffe: Coastal Hedges, Beds & Lawns Kept on Schedule",
     title="Garden Maintenance Redcliffe | Green Estates Gardening",
@@ -246,7 +247,7 @@ dict(
 <h2>Established gardens and old trees</h2>
 <p>Redcliffe's older blocks carry mature frangipanis, poincianas, palms and citrus that need seasonal attention: fronds and seed pods cleared, low limbs lifted off paths and roofs, dead wood removed, and beds under the canopy mulched rather than left to bare sand and weeds. Minor tree work is done on the same visit where it can be reached from the ground or a step ladder; larger work is referred to an arborist.</p>
 <h2>Units, holiday rentals and homeowners</h2>
-<p>Unit complexes and body corporates from Woody Point to Scarborough put their shared gardens, hedges and lawns on a scheduled round with one invoice and photos. Holiday-rental owners near the jetty and Suttons Beach want the frontage presentable for every Friday check-in. Long-term homeowners want the standard they used to keep themselves, now done for them. The mowing side of the package is on our <a href="/blog/lawn-mowing-redcliffe/">lawn mowing Redcliffe</a> page.</p>
+<p>Unit complexes and body corporates from Woody Point to Scarborough put their shared gardens, hedges and lawns on a scheduled round with one invoice and photos. Holiday-rental owners near the jetty and Suttons Beach want the frontage presentable for every Friday check-in. Long-term homeowners want the standard they used to keep themselves, now done for them. The mowing side of the package is on our <a href="/service-areas/lawn-mowing-redcliffe/">lawn mowing Redcliffe</a> page.</p>
 <h2>Why Redcliffe chooses Green Estates</h2>
 <p>One local operator, one visit, one fixed price, and a crew that knows which hedge reshoots and which does not. We run the peninsula as a single loop on a set day from our base in Wamuran, with no contract and 5.0 on Google from 23 reviews.</p>
 """,

@@ -57,47 +57,92 @@
   status = 301
   force = true
 [[redirects]]
-  from = "/blog/lawn-mowing-north-lakes"
-  to = "/blog/lawn-mowing-north-lakes/"
+  from = "/blog/lawn-mowing-caboolture"
+  to = "/service-areas/lawn-mowing-caboolture/"
   status = 301
   force = true
 [[redirects]]
   from = "/blog/lawn-mowing-redcliffe"
-  to = "/blog/lawn-mowing-redcliffe/"
+  to = "/service-areas/lawn-mowing-redcliffe/"
   status = 301
   force = true
 [[redirects]]
-  from = "/blog/lawn-mowing-caboolture"
-  to = "/blog/lawn-mowing-caboolture/"
+  from = "/blog/lawn-mowing-north-lakes"
+  to = "/service-areas/lawn-mowing-north-lakes/"
   status = 301
   force = true
 [[redirects]]
   from = "/blog/lawn-mowing-morayfield"
-  to = "/blog/lawn-mowing-morayfield/"
-  status = 301
-  force = true
-[[redirects]]
-  from = "/blog/lawn-mowing-bribie-island"
-  to = "/blog/lawn-mowing-bribie-island/"
-  status = 301
-  force = true
-[[redirects]]
-  from = "/blog/garden-maintenance-north-lakes"
-  to = "/blog/garden-maintenance-north-lakes/"
-  status = 301
-  force = true
-[[redirects]]
-  from = "/blog/lawn-mowing-narangba"
-  to = "/blog/lawn-mowing-narangba/"
-  status = 301
-  force = true
-[[redirects]]
-  from = "/blog/garden-maintenance-redcliffe"
-  to = "/blog/garden-maintenance-redcliffe/"
+  to = "/service-areas/lawn-mowing-morayfield/"
   status = 301
   force = true
 [[redirects]]
   from = "/blog/lawn-mowing-strathpine"
-  to = "/blog/lawn-mowing-strathpine/"
+  to = "/service-areas/lawn-mowing-strathpine/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-narangba"
+  to = "/service-areas/lawn-mowing-narangba/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-bribie-island"
+  to = "/service-areas/lawn-mowing-bribie-island/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/garden-maintenance-north-lakes"
+  to = "/service-areas/garden-maintenance-north-lakes/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/garden-maintenance-redcliffe"
+  to = "/service-areas/garden-maintenance-redcliffe/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-caboolture/"
+  to = "/service-areas/lawn-mowing-caboolture/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-redcliffe/"
+  to = "/service-areas/lawn-mowing-redcliffe/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-north-lakes/"
+  to = "/service-areas/lawn-mowing-north-lakes/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-morayfield/"
+  to = "/service-areas/lawn-mowing-morayfield/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-strathpine/"
+  to = "/service-areas/lawn-mowing-strathpine/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-narangba/"
+  to = "/service-areas/lawn-mowing-narangba/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-bribie-island/"
+  to = "/service-areas/lawn-mowing-bribie-island/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/garden-maintenance-north-lakes/"
+  to = "/service-areas/garden-maintenance-north-lakes/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/garden-maintenance-redcliffe/"
+  to = "/service-areas/garden-maintenance-redcliffe/"
   status = 301
   force = true

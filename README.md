@@ -47,7 +47,7 @@ title/description/first 100 words, word count, FAQ count, valid JSON-LD, no brok
 | `/thank-you/` | noindex, form redirect target |
 | `/blog/` + 10 posts | AEO articles (see `docs/blog-topic-research.md`) |
 | `/service-areas/` | Hub linking every suburb page |
-| `/blog/lawn-mowing-<suburb>/` ×7, `/blog/garden-maintenance-<suburb>/` ×2 | Existing suburb landing pages, URLs preserved per strategy doc |
+| `/service-areas/lawn-mowing-<suburb>/` ×7, `/service-areas/garden-maintenance-<suburb>/` ×2 | Suburb pages moved from the old `/blog/` URLs; each old URL 301s here |
 | `/service-areas/lawn-mowing-<suburb>/` ×8 | New suburb pages. Deception Bay, Petrie and Kallangur are noindexed and unlisted until `CONFIRMED_RADIUS = True` in `src/suburbs.py` |
 
 ## Forms / CRM
@@ -66,7 +66,7 @@ npx serve public   # or: python3 -m http.server -d public 8080
 ## Redirects
 
 Old Wix URLs had no trailing slash. `vercel.json` and `netlify.toml` carry explicit 301 rules for all 18 old
-sitemap URLs plus a `www` to apex redirect. Verify against a preview or the live domain with:
+sitemap URLs (the nine suburb pages redirect from `/blog/` to `/service-areas/`) plus a `www` to apex redirect. Verify against a preview or the live domain with:
 
 ```
 node scripts/check-redirects.mjs https://greenestatesgardening.com.au

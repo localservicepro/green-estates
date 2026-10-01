@@ -232,7 +232,7 @@ def garden_maintenance():
         ("Is garden maintenance cheaper if you already mow the lawn?",
          "<p>Yes. The garden work is added to a visit we are already making, so there is no second call-out and no second travel charge. One crew, one visit, one invoice, and the price per round is lower than booking a separate gardener.</p>"),
         ("Which suburbs do you run garden maintenance rounds in?",
-         "<p>Across the Moreton Bay Region, with dedicated local pages for <a href='/blog/garden-maintenance-north-lakes/'>North Lakes</a> and <a href='/blog/garden-maintenance-redcliffe/'>Redcliffe</a>, where most of our regular garden clients are. Caboolture, Morayfield, Burpengary, Narangba and Strathpine are on the same rounds. Send the address and we will confirm the day.</p>"),
+         "<p>Across the Moreton Bay Region, with dedicated local pages for <a href='/service-areas/garden-maintenance-north-lakes/'>North Lakes</a> and <a href='/service-areas/garden-maintenance-redcliffe/'>Redcliffe</a>, where most of our regular garden clients are. Caboolture, Morayfield, Burpengary, Narangba and Strathpine are on the same rounds. Send the address and we will confirm the day.</p>"),
     ]
     body = service_hero(
         s, "Garden Maintenance Moreton Bay: Regular Garden Care Bundled With Your Mowing", "Beds · hedges · pruning · tidy between visits",
@@ -276,8 +276,8 @@ def garden_maintenance():
         <h2 id="areas-h">Garden maintenance in North Lakes, Redcliffe and across the corridor</h2>
         <p class="lead">Two suburbs have their own garden maintenance pages because that is where most of our regular garden clients are. The rest of the Moreton Bay corridor is covered on the same rounds.</p>
         <div class="suburb-grid" data-reveal-stagger>
-          <a class="suburb-card" href="/blog/garden-maintenance-north-lakes/"><span class="icon-tile">{icon("pin")}</span><span><strong>North Lakes</strong><em>Garden maintenance</em></span>{icon("arrow")}</a>
-          <a class="suburb-card" href="/blog/garden-maintenance-redcliffe/"><span class="icon-tile">{icon("pin")}</span><span><strong>Redcliffe</strong><em>Garden maintenance</em></span>{icon("arrow")}</a>
+          <a class="suburb-card" href="/service-areas/garden-maintenance-north-lakes/"><span class="icon-tile">{icon("pin")}</span><span><strong>North Lakes</strong><em>Garden maintenance</em></span>{icon("arrow")}</a>
+          <a class="suburb-card" href="/service-areas/garden-maintenance-redcliffe/"><span class="icon-tile">{icon("pin")}</span><span><strong>Redcliffe</strong><em>Garden maintenance</em></span>{icon("arrow")}</a>
           <a class="suburb-card" href="/service-areas/"><span class="icon-tile">{icon("grid")}</span><span><strong>All service areas</strong><em>Moreton Bay &amp; Somerset</em></span>{icon("arrow")}</a>
         </div>
         <p style="margin-top:20px">Also on the round: Caboolture, Morayfield, Burpengary, Narangba, Strathpine, Bribie Island and Beachmere, and acreage gardens around Wamuran and D'Aguilar.</p>

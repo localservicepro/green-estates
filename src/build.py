@@ -92,6 +92,19 @@ def main():
         for href in re.findall(r'href="([^"]+)"', doc):
             all_links.add(href)
     write_extras()
+    # prune pages from earlier builds that no longer exist (e.g. suburb pages moved from /blog/ to /service-areas/)
+    expected = {os.path.abspath(out_path(p["path"])) for p, _ in PAGES}
+    for root, dirs, files in os.walk(PUB):
+        if os.path.abspath(root).startswith(os.path.join(PUB, "assets")):
+            continue
+        for fn in files:
+            if fn.endswith(".html"):
+                fp = os.path.abspath(os.path.join(root, fn))
+                if fp not in expected:
+                    os.remove(fp); print("pruned stale page:", os.path.relpath(fp, PUB))
+    for root, dirs, files in os.walk(PUB, topdown=False):
+        if root != PUB and not os.listdir(root):
+            os.rmdir(root)
     # internal link resolution
     bad = []
     for href in sorted(all_links):
