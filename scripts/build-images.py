@@ -1,11 +1,15 @@
 """Turn the client's source photos (assets-src/) into optimised, semantically named
 WebP files in public/assets/img/. Run: python3 scripts/build-images.py"""
 import os
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageFilter
 
 SRC = 'assets-src'
 OUT = 'public/assets/img'
-SIZES = (1600, 1000, 600)
+SIZES = (1600, 1200, 800, 600, 400)   # keep in sync with IMG_WIDTHS in src/gesite.py
+# Hero backgrounds sit under a dark green overlay, so they tolerate stronger compression.
+QUALITY = 58
+HERO_QUALITY = 50
+HERO_BLUR = 0.8   # px at 800w, scaled with width; invisible under the overlay, halves the file size
 
 # semantic name -> source file
 MANIFEST = {
@@ -53,7 +57,7 @@ for name, src in MANIFEST.items():
     im = ImageOps.exif_transpose(Image.open(p)).convert('RGB')
     for s in SIZES:
         outp = os.path.join(OUT, f'{name}-{s}.webp')
-        if os.path.exists(outp):
+        if os.path.exists(outp) and os.path.getmtime(outp) > os.path.getmtime(__file__):
             continue
         w, h = im.size
         if w > s:
@@ -61,6 +65,21 @@ for name, src in MANIFEST.items():
             im2 = im.resize((s, round(h * r)), Image.LANCZOS)
         else:
             im2 = im.copy()
-        im2.save(outp, 'WEBP', quality=78, method=6)
+        if name.startswith('hero-'):
+            im2 = im2.filter(ImageFilter.GaussianBlur(HERO_BLUR * im2.size[0] / 800))
+        im2.save(outp, 'WEBP', quality=HERO_QUALITY if name.startswith('hero-') else QUALITY, method=6)
     print(name, '<-', src, im.size)
+# remove widths that are no longer generated
+for f in os.listdir(OUT):
+    if f.endswith('.webp') and any(f.endswith(f'-{w}.webp') for w in (1000,)):
+        os.remove(os.path.join(OUT, f))
+
+# Logos: WebP at the sizes they are displayed (header ~78px tall, footer 76px tall) for 1x and 2x screens
+LOGOS = {'logo-green-estates-gardening': 'public/assets/img/logo-green-estates-gardening.webp',
+         'logo-green-estates-gardening-knockout': 'public/assets/img/logo-green-estates-gardening-knockout.png'}
+for name, src in LOGOS.items():
+    im = Image.open(src).convert('RGBA')
+    for w in (100, 200):
+        h = round(im.size[1] * w / im.size[0])
+        im.resize((w, h), Image.LANCZOS).save(os.path.join(OUT, f'{name}-{w}.webp'), 'WEBP', quality=88, method=6)
 print('done', len(MANIFEST))

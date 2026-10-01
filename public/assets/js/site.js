@@ -228,50 +228,50 @@
   /* ---------- Year ---------- */
   d.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
-  /* ---------- Motion (GSAP) ---------- */
-  if (reduce || typeof gsap === 'undefined') return;
-  if (typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
+  /* ---------- Motion ----------
+     No animation library. Content that starts below the fold fades up as it scrolls into view;
+     anything already on screen at load is never hidden, so first paint and LCP are not delayed.
+     Classes are removed once the reveal finishes so hover transitions behave normally. */
+  if (reduce || !('IntersectionObserver' in w)) return;
+  var vh = w.innerHeight || d.documentElement.clientHeight;
+  var below = function (el) { var r = el.getBoundingClientRect(); return r.height > 0 && r.top > vh * 0.9; };
+  var settle = function (el, cls, ms) { setTimeout(function () { el.classList.remove(cls, 'is-in'); }, ms); };
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      var el = en.target; io.unobserve(el);
+      el.classList.add('is-in');
+      if (el.classList.contains('rv')) settle(el, 'rv', 700);
+      if (el.classList.contains('rv-s')) settle(el, 'rv-s', 600 + Math.min(el.children.length, 12) * 70);
+      if (el.hasAttribute('data-count')) countUp(el);
+    });
+  }, { rootMargin: '0px 0px -8% 0px' });
 
-  /* Hero entrance: eyebrow, headline lines, lead, CTAs, then the form card */
-  var hero = d.querySelector('.hero');
-  if (hero) {
-    var tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
-    var h1 = hero.querySelector('h1');
-    if (h1 && !h1.dataset.split) {
-      var words = h1.innerHTML.split(/(\s+)/);
-      h1.innerHTML = words.map(function (t) { return /^\s+$/.test(t) || !t ? t : '<span class="w" style="display:inline-block">' + t + '</span>'; }).join('');
-      h1.dataset.split = '1';
-    }
-    var bg = hero.querySelector('.hero__bg img');
-    if (bg) tl.fromTo(bg, { scale: 1.12 }, { scale: 1.04, duration: 2.2, ease: 'power2.out' }, 0);
-    tl.from(hero.querySelectorAll('.breadcrumbs, .eyebrow'), { y: 16, opacity: 0, duration: .5 }, .1)
-      .from(hero.querySelectorAll('h1 .w'), { y: 40, opacity: 0, duration: .7, stagger: .05 }, .2)
-      .from(hero.querySelectorAll('.gold-rule'), { scaleX: 0, transformOrigin: 'left center', duration: .6 }, '-=.4')
-      .from(hero.querySelectorAll('.lead, .hero__cta, .trust-strip li'), { y: 24, opacity: 0, duration: .55, stagger: .07 }, '-=.5')
-      .from(hero.querySelectorAll('.quote-card, .hero__aside'), { y: 30, opacity: 0, duration: .7 }, '-=.6');
+  /* Read every position first, then write, so the browser lays out once instead of once per element */
+  var reveal = [], stagger = [], counters = [];
+  d.querySelectorAll('[data-reveal]').forEach(function (el) { if (below(el)) reveal.push(el); });
+  d.querySelectorAll('[data-reveal-stagger]').forEach(function (el) { if (below(el)) stagger.push(el); });
+  d.querySelectorAll('[data-count]').forEach(function (el) { if (below(el)) counters.push(el); });
+  reveal.forEach(function (el) { el.classList.add('rv'); io.observe(el); });
+  stagger.forEach(function (el) {
+    Array.prototype.forEach.call(el.children, function (c, i) { if (i < 12) c.style.setProperty('--i', i); });
+    el.classList.add('rv-s'); io.observe(el);
+  });
+
+  /* Count-up stats: the final number is in the HTML; only numbers below the fold are animated */
+  function countUp(el) {
+    var target = parseFloat(el.getAttribute('data-count')), dec = (el.getAttribute('data-decimals') | 0);
+    var suffix = el.getAttribute('data-suffix') || '', t0 = null, dur = 1200;
+    var step = function (ts) {
+      if (t0 === null) t0 = ts;
+      var k = Math.min(1, (ts - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = (target * e).toFixed(dec) + suffix;
+      if (k < 1) w.requestAnimationFrame(step);
+    };
+    w.requestAnimationFrame(step);
   }
-
-  /* Scroll reveals */
-  gsap.utils.toArray('[data-reveal]').forEach(function (el) {
-    gsap.from(el, { opacity: 0, y: 24, duration: .55, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
-  });
-  gsap.utils.toArray('[data-reveal-stagger]').forEach(function (el) {
-    var kids = Array.prototype.slice.call(el.children, 0, 12);
-    gsap.from(kids, { opacity: 0, y: 20, scale: .96, duration: .45, ease: 'back.out(1.4)', stagger: { each: .07, grid: 'auto', from: 'start' }, scrollTrigger: { trigger: el, start: 'top 85%', once: true } });
-  });
-
-  /* Count-up stats */
-  gsap.utils.toArray('[data-count]').forEach(function (el) {
-    var target = parseFloat(el.getAttribute('data-count'));
-    var dec = (el.getAttribute('data-decimals') | 0);
-    var suffix = el.getAttribute('data-suffix') || '';
-    var obj = { v: 0 };
-    gsap.to(obj, { v: target, duration: 1.4, ease: 'power1.out', scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-      onUpdate: function () { el.textContent = obj.v.toFixed(dec) + suffix; } });
-  });
-
-  /* Gentle parallax on framed images */
-  gsap.utils.toArray('.img-frame img, .ba').forEach(function (img) {
-    gsap.fromTo(img, { y: -12 }, { y: 12, ease: 'none', scrollTrigger: { trigger: img, start: 'top bottom', end: 'bottom top', scrub: 1 } });
+  counters.forEach(function (el) {
+    el.textContent = (0).toFixed(el.getAttribute('data-decimals') | 0) + (el.getAttribute('data-suffix') || '');
+    io.observe(el);
   });
 })();

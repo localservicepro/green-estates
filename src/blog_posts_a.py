@@ -30,7 +30,7 @@ dict(
 
 <h2 id="season">How often to mow in each season in South-East Queensland</h2>
 <p>Moreton Bay sits in a warm, humid climate where warm-season grasses do almost all their growing between the first storms in October and Easter. Here is the schedule we run for regular clients from Redcliffe to Woodford:</p>
-<div class="tbl-wrap"><table>
+<div class="tbl-wrap" tabindex="0" role="region" aria-label="Comparison table, scrolls sideways on small screens"><table>
 <thead><tr><th>Months</th><th>Growth</th><th>Mow every</th><th>Notes</th></tr></thead>
 <tbody>
 <tr><td>October – November</td><td>Fast, accelerating</td><td>10–14 days</td><td>Storm season starts; lift the deck a notch as heat builds.</td></tr>
@@ -240,7 +240,7 @@ dict(
     body=f'''
 <h2 id="rules">What are the legal mowing hours in Queensland?</h2>
 <p>Queensland's noise rules treat lawn mowers, line trimmers, leaf blowers, chainsaws and similar powered garden tools as regulated devices under the Environmental Protection Act. Used at home, they must not be operated outside these hours:</p>
-<div class="tbl-wrap"><table>
+<div class="tbl-wrap" tabindex="0" role="region" aria-label="Comparison table, scrolls sideways on small screens"><table>
 <thead><tr><th>Day</th><th>Earliest start</th><th>Latest finish</th></tr></thead>
 <tbody>
 <tr><td>Monday to Friday</td><td>7:00am</td><td>7:00pm</td></tr>
@@ -310,8 +310,8 @@ dict(
 <p>Shape matters as much as area in the ride-on vs push mowing decision. A long, narrow 1,200 square metre block in Morayfield with a house in the middle, two garden beds and a clothesline may be quicker with a wide push mower than with a ride-on that has to three-point-turn at every obstacle. A square 900 square metre back paddock in Woodford with nothing in it is ride-on work all day.</p>
 
 <h2 id="compare">Ride-on vs push mowing: how do they compare?</h2>
-<div class="tbl-wrap"><table>
-<thead><tr><th></th><th>Ride-on / zero-turn</th><th>Push mower</th></tr></thead>
+<div class="tbl-wrap" tabindex="0" role="region" aria-label="Comparison table, scrolls sideways on small screens"><table>
+<thead><tr><th scope="col">What matters</th><th scope="col">Ride-on / zero-turn</th><th scope="col">Push mower</th></tr></thead>
 <tbody>
 <tr><td>Best for</td><td>Open blocks over ~800 m², acreage, paddocks, dam surrounds</td><td>Standard suburban lawns, tight spaces, soft buffalo</td></tr>
 <tr><td>Speed</td><td>Very fast on open ground</td><td>Slow on area, fast around obstacles</td></tr>

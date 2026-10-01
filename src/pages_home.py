@@ -32,7 +32,7 @@ def home():
 
     body = f'''
 <section class="hero">
-  <div class="hero__bg">{picture("hero-lawn-mowing-moreton-bay", "Freshly mown striped lawn in front of a Moreton Bay home after professional lawn mowing", sizes="100vw", loading="eager", fetchpriority="high")}</div>
+  <div class="hero__bg">{picture("hero-lawn-mowing-moreton-bay", "Freshly mown striped lawn in front of a Moreton Bay home after professional lawn mowing", sizes=SIZES_HERO, loading="eager", fetchpriority="high")}</div>
   <div class="hero__glow" aria-hidden="true"></div>
   <div class="container">
     <div class="hero__grid">
@@ -42,7 +42,7 @@ def home():
         <span class="gold-rule" aria-hidden="true"></span>
         <p class="lead">Green Estates Gardening is the Wamuran-based crew homeowners, landlords and acreage owners rely on week in, week out for lawn mowing, acreage and ride-on mowing, hedge trimming, garden cleanups, weed control and mulching. Fixed-price quotes, one reliable local operator, and a property you are proud to pull into.</p>
         <div class="btn-row hero__cta">
-          <a href="#quote" class="btn btn--primary btn--lg" data-open-quote>Get a Free Quote {icon("arrow")}</a>
+          <a href="/contact/#quote" class="btn btn--primary btn--lg" data-open-quote>Get a Free Quote {icon("arrow")}</a>
           <a href="tel:{SITE['phone_tel']}" class="btn btn--secondary btn--lg">{icon("phone")} {SITE['phone']}</a>
         </div>
         {trust_strip()}
@@ -85,7 +85,7 @@ def home():
           <div class="stat"><div class="stat__num" data-count="{len(ALL_SUBURBS)}">{len(ALL_SUBURBS)}</div><div class="stat__label">Suburbs across Moreton Bay &amp; Somerset</div></div>
         </div>
         <div class="img-frame" style="margin-top:32px" data-reveal>
-          {picture("branded-trailer-green-estates", "Green Estates Gardening branded trailer on site at a Moreton Bay lawn mowing job", sizes="(min-width: 900px) 45vw, 100vw")}
+          {picture("branded-trailer-green-estates", "Green Estates Gardening branded trailer on site at a Moreton Bay lawn mowing job", sizes="(min-width: 1200px) 560px, (min-width: 900px) 46vw, calc(100vw - 32px)")}
         </div>
       </div>
     </div>
@@ -145,7 +145,7 @@ def home():
         <div class="btn-row"><a class="btn btn--primary" href="https://www.google.com/search?q=Green+Estates+Gardening+Wamuran+reviews" rel="noopener" target="_blank">Read our Google reviews {icon("arrow")}</a><a class="btn btn--secondary" href="{SITE['facebook']}" rel="noopener" target="_blank">{icon("facebook")} Facebook</a></div>
       </div>
       <div class="img-frame img-frame--tall" data-reveal>
-        {picture("ride-on-mowing-acreage-moreton-bay", "Green Estates Gardening operator on a zero-turn ride-on mower on Moreton Bay acreage", sizes="(min-width: 900px) 45vw, 100vw")}
+        {picture("ride-on-mowing-acreage-moreton-bay", "Green Estates Gardening operator on a zero-turn ride-on mower on Moreton Bay acreage", sizes="(min-width: 1200px) 560px, (min-width: 900px) 46vw, calc(100vw - 32px)")}
         <div class="img-badge">{stars()}<div><strong>5.0</strong><br><span>23 Google reviews</span></div></div>
       </div>
     </div>

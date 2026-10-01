@@ -58,7 +58,7 @@ def render_suburb(s):
     region = "Moreton Bay Region" if s["region"] == "mb" else "Somerset Region"
     body = f'''
 <section class="hero hero--compact">
-  <div class="hero__bg">{picture(s["image"], s["alt"], sizes="100vw", loading="eager", fetchpriority="high")}</div>
+  <div class="hero__bg">{picture(s["image"], s["alt"], sizes=SIZES_HERO, loading="eager", fetchpriority="high")}</div>
   <div class="hero__glow" aria-hidden="true"></div>
   <div class="container">
     <div class="hero__grid">
@@ -91,7 +91,7 @@ def render_suburb(s):
         <div class="post-cta">
           <h2>Get a fixed price for your {esc(s["name"])} property</h2>
           <p>Send the address, a rough size and what you need. Standard blocks are usually quoted the same day; acreage within one business day. No contract, no obligation.</p>
-          <div class="btn-row"><a href="#quote" class="btn btn--primary">Get a Free Quote {icon("arrow")}</a><a href="tel:{SITE['phone_tel']}" class="btn btn--secondary">{icon("phone")} {SITE['phone']}</a></div>
+          <div class="btn-row"><a href="/contact/#quote" class="btn btn--primary" data-open-quote>Get a Free Quote {icon("arrow")}</a><a href="tel:{SITE['phone_tel']}" class="btn btn--secondary">{icon("phone")} {SITE['phone']}</a></div>
         </div>
       </article>
       <aside class="post-aside">
@@ -128,7 +128,7 @@ def render_hub():
     others_html = "".join(f'<li>{esc(n)}</li>' for n in others)
     body = f'''
 <section class="hero hero--compact">
-  <div class="hero__bg">{picture("hero-acreage-mowing-somerset", "Service areas: freshly mown acreage in the Somerset region served by Green Estates Gardening", sizes="100vw", loading="eager", fetchpriority="high")}</div>
+  <div class="hero__bg">{picture("hero-acreage-mowing-somerset", "Service areas: freshly mown acreage in the Somerset region served by Green Estates Gardening", sizes=SIZES_HERO, loading="eager", fetchpriority="high")}</div>
   <div class="hero__glow" aria-hidden="true"></div>
   <div class="container">
     {breadcrumbs([("Home", "/"), ("Service Areas", None)])}
@@ -173,7 +173,7 @@ def render_hub():
 <section class="section section--dark">
   <div class="container">
     <div class="section-head" data-reveal><span class="eyebrow">What we do in every area</span><h2>Six services, one fixed price per visit</h2></div>
-    <div class="grid grid--services" data-reveal-stagger>{service_cards(sizes="(min-width: 1024px) 25vw, 100vw")}</div>
+    <div class="grid grid--services" data-reveal-stagger>{service_cards(sizes="(min-width: 1200px) 370px, (min-width: 1024px) 31vw, (min-width: 640px) 46vw, calc(100vw - 32px)")}</div>
   </div>
 </section>
 {cta_band("Not sure if we cover you?", "If you are anywhere between Bribie Island, Redcliffe and Esk, the answer is almost certainly yes. Send the address and we will confirm the day and a fixed price.")}

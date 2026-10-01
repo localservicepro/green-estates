@@ -24,7 +24,7 @@ def nice_date(iso):
 def post_url(p):
     return f"/blog/{p['slug']}/"
 
-def blog_card(p, sizes="(min-width: 1024px) 33vw, 100vw"):
+def blog_card(p, sizes="(min-width: 1200px) 370px, (min-width: 1024px) 31vw, (min-width: 640px) 46vw, calc(100vw - 32px)"):
     cat, _ = CATEGORIES[p["category"]]
     return f'''<a class="card service-card post-card" href="{post_url(p)}">
   <div class="service-card__img">{picture(p["image"], p["alt"], sizes=sizes)}</div>
@@ -60,11 +60,11 @@ def render_post(p, all_posts):
     related = [q for q in all_posts if q["slug"] != p["slug"] and q["category"] == p["category"]][:2]
     if len(related) < 2:
         related += [q for q in all_posts if q["slug"] != p["slug"] and q not in related][: 2 - len(related)]
-    rel_cards = "".join(blog_card(q, sizes="(min-width: 1024px) 50vw, 100vw") for q in related)
+    rel_cards = "".join(blog_card(q, sizes="(min-width: 1200px) 560px, (min-width: 1024px) 46vw, calc(100vw - 32px)") for q in related)
     faq_items = "".join(f'<details><summary><span>{esc(q)}</span><span class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></summary><div class="faq__a">{a}</div></details>' for q, a in p["faqs"])
     body = f'''
 <section class="hero hero--compact hero--post">
-  <div class="hero__bg">{picture(p["image"], p["alt"], sizes="100vw", loading="eager", fetchpriority="high")}</div>
+  <div class="hero__bg">{picture(p["image"], p["alt"], sizes=SIZES_HERO, loading="eager", fetchpriority="high")}</div>
   <div class="hero__glow" aria-hidden="true"></div>
   <div class="container">
     {breadcrumbs([("Home", "/"), ("Blog", "/blog/"), (cat, "/blog/#" + p["category"]), (p["short"], None)])}
@@ -144,7 +144,7 @@ def render_index(posts):
         groups.append(f'''<div class="blog-group" id="{key}"><div class="section-head" data-reveal><span class="eyebrow">{esc(name)}</span><h2>{esc(name)} questions, answered for Moreton Bay</h2></div><div class="grid grid--3" data-reveal-stagger>{cards}</div></div>''')
     body = f'''
 <section class="hero hero--compact">
-  <div class="hero__bg">{picture("hero-lawn-mowing-moreton-bay", "Freshly mown lawn in Moreton Bay, the Green Estates Gardening blog", sizes="100vw", loading="eager", fetchpriority="high")}</div>
+  <div class="hero__bg">{picture("hero-lawn-mowing-moreton-bay", "Freshly mown lawn in Moreton Bay, the Green Estates Gardening blog", sizes=SIZES_HERO, loading="eager", fetchpriority="high")}</div>
   <div class="hero__glow" aria-hidden="true"></div>
   <div class="container">
     {breadcrumbs([("Home", "/"), ("Blog", None)])}

@@ -14,7 +14,7 @@ def about():
     ]
     body = f'''
 <section class="hero hero--compact">
-  <div class="hero__bg">{picture("hero-about-green-estates", "Green Estates Gardening ute and branded trailer parked on a Moreton Bay street", sizes="100vw", loading="eager", fetchpriority="high")}</div>
+  <div class="hero__bg">{picture("hero-about-green-estates", "Green Estates Gardening ute and branded trailer parked on a Moreton Bay street", sizes=SIZES_HERO, loading="eager", fetchpriority="high")}</div>
   <div class="hero__glow" aria-hidden="true"></div>
   <div class="container">
     <div class="hero__grid">
@@ -30,7 +30,7 @@ def about():
         </div>
         {trust_strip()}
       </div>
-      <div class="hero__aside img-frame img-frame--tall">{picture("ride-on-mowing-acreage-moreton-bay", "Hamish Baggley of Green Estates Gardening ride-on mowing acreage in Moreton Bay", sizes="(min-width: 1024px) 40vw, 100vw")}</div>
+      <div class="hero__aside img-frame img-frame--tall">{picture("ride-on-mowing-acreage-moreton-bay", "Hamish Baggley of Green Estates Gardening ride-on mowing acreage in Moreton Bay", sizes="(min-width: 1200px) 440px, 40vw")}</div>
     </div>
   </div>
 </section>
@@ -48,7 +48,7 @@ def about():
         {check_list(["<strong>Reliable:</strong> we come on the day we said, and we message when the job is done.", "<strong>Honest pricing:</strong> one fixed price, agreed before we start, no hourly surprises.", "<strong>Properly finished:</strong> edged, trimmed, blown down and green waste removed every time.", "<strong>Genuinely local:</strong> based in Wamuran, working across Moreton Bay and Somerset every week."])}
       </div>
       <div>
-        <div class="img-frame" data-reveal>{picture("branded-trailer-green-estates", "Green Estates Gardening trailer with logo and phone number at a job in Moreton Bay", sizes="(min-width: 900px) 45vw, 100vw")}</div>
+        <div class="img-frame" data-reveal>{picture("branded-trailer-green-estates", "Green Estates Gardening trailer with logo and phone number at a job in Moreton Bay", sizes="(min-width: 1200px) 560px, (min-width: 900px) 46vw, calc(100vw - 32px)")}</div>
         <div class="stats" style="margin-top:28px" data-reveal-stagger>
           <div class="stat"><div class="stat__num"><span data-count="13">13</span>+</div><div class="stat__label">Years of experience</div></div>
           <div class="stat"><div class="stat__num"><span data-count="5" data-decimals="1">5.0</span><span class="gold">★</span></div><div class="stat__label">Google rating, 23 reviews</div></div>
@@ -80,7 +80,7 @@ def about():
 <section class="section section--light" aria-labelledby="svc-h">
   <div class="container">
     <div class="section-head" data-reveal><span class="eyebrow">Our services</span><h2 id="svc-h">Everything a Moreton Bay property needs, from one local team</h2></div>
-    <div class="grid grid--services" data-reveal-stagger>{service_cards(sizes="(min-width: 1024px) 25vw, 100vw")}</div>
+    <div class="grid grid--services" data-reveal-stagger>{service_cards(sizes="(min-width: 1200px) 370px, (min-width: 1024px) 31vw, (min-width: 640px) 46vw, calc(100vw - 32px)")}</div>
   </div>
 </section>
 
@@ -114,7 +114,7 @@ def contact():
     ]
     body = f'''
 <section class="hero hero--compact">
-  <div class="hero__bg">{picture("hero-contact-wamuran", "Neatly mown lawn and driveway edge at a Moreton Bay home ready for a lawn mowing quote", sizes="100vw", loading="eager", fetchpriority="high")}</div>
+  <div class="hero__bg">{picture("hero-contact-wamuran", "Neatly mown lawn and driveway edge at a Moreton Bay home ready for a lawn mowing quote", sizes=SIZES_HERO, loading="eager", fetchpriority="high")}</div>
   <div class="hero__glow" aria-hidden="true"></div>
   <div class="container">
     <div class="hero__grid">
@@ -170,7 +170,7 @@ def contact():
 <section class="section section--light" aria-labelledby="svc-h">
   <div class="container">
     <div class="section-head" data-reveal><span class="eyebrow">What can we quote?</span><h2 id="svc-h">Lawn mowing quote Moreton Bay wide, and every other service</h2></div>
-    <div class="grid grid--services" data-reveal-stagger>{service_cards(sizes="(min-width: 1024px) 25vw, 100vw")}</div>
+    <div class="grid grid--services" data-reveal-stagger>{service_cards(sizes="(min-width: 1200px) 370px, (min-width: 1024px) 31vw, (min-width: 640px) 46vw, calc(100vw - 32px)")}</div>
   </div>
 </section>
 

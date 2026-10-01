@@ -4,7 +4,7 @@ from gesite import *
 def service_hero(s, h1, eyebrow, lead, preselect, hero_img, hero_alt, crumb_label):
     return f'''
 <section class="hero hero--compact">
-  <div class="hero__bg">{picture(hero_img, hero_alt, sizes="100vw", loading="eager", fetchpriority="high")}</div>
+  <div class="hero__bg">{picture(hero_img, hero_alt, sizes=SIZES_HERO, loading="eager", fetchpriority="high")}</div>
   <div class="hero__glow" aria-hidden="true"></div>
   <div class="container">
     <div class="hero__grid">
@@ -57,7 +57,7 @@ def hedge_trimming():
         {check_list(["Formal and informal hedges, screens and topiary balls", "Height and width reduction, staged where the species needs it", "Shrub, ornamental and fruit tree pruning up to minor-tree height", "Raked, blown down and green waste removed every visit"])}
       </div>
       <div class="img-frame img-frame--tall" data-reveal>
-        {picture("hedge-trimming-formal-hedges", "Formal hedge trimming and shaped shrubs in a Moreton Bay front garden", sizes="(min-width: 900px) 45vw, 100vw")}
+        {picture("hedge-trimming-formal-hedges", "Formal hedge trimming and shaped shrubs in a Moreton Bay front garden", sizes="(min-width: 1200px) 560px, (min-width: 900px) 46vw, calc(100vw - 32px)")}
       </div>
     </div>
   </div>
@@ -87,7 +87,7 @@ def hedge_trimming():
         </div>
       </div>
       <div class="img-frame" data-reveal>
-        {picture("hedge-trimming-round-hedge-house", "Perfectly rounded hedge beside a home after hedge trimming in Moreton Bay", sizes="(min-width: 900px) 45vw, 100vw")}
+        {picture("hedge-trimming-round-hedge-house", "Perfectly rounded hedge beside a home after hedge trimming in Moreton Bay", sizes="(min-width: 1200px) 560px, (min-width: 900px) 46vw, calc(100vw - 32px)")}
       </div>
     </div>
   </div>
@@ -188,7 +188,7 @@ def garden_cleanup():
         </div>
       </div>
       <div class="img-frame img-frame--tall" data-reveal>
-        {picture("garden-cleanup-tidy-yard", "Tidy front yard and footpath after a garden cleanup in Moreton Bay", sizes="(min-width: 900px) 45vw, 100vw")}
+        {picture("garden-cleanup-tidy-yard", "Tidy front yard and footpath after a garden cleanup in Moreton Bay", sizes="(min-width: 1200px) 560px, (min-width: 900px) 46vw, calc(100vw - 32px)")}
       </div>
     </div>
   </div>
@@ -243,7 +243,7 @@ def mulching():
         {check_list(["Bed preparation: weeding, edging, soil top-up and weed treatment", "Mulch supplied in bulk and spread to an even 75 mm", "Hardwood chip, forest mulch, tea tree or sugar cane to suit the bed", "Small limb and branch removal on the same visit"])}
       </div>
       <div class="img-frame img-frame--tall" data-reveal>
-        {picture("mulched-garden-bed-fenceline", "Freshly mulched garden bed along a fence line at a Moreton Bay property", sizes="(min-width: 900px) 45vw, 100vw")}
+        {picture("mulched-garden-bed-fenceline", "Freshly mulched garden bed along a fence line at a Moreton Bay property", sizes="(min-width: 1200px) 560px, (min-width: 900px) 46vw, calc(100vw - 32px)")}
         <div class="img-badge"><div><strong>75 mm</strong><br><span>settled mulch depth</span></div></div>
       </div>
     </div>

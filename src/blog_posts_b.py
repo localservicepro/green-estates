@@ -24,7 +24,7 @@ dict(
     body=f'''
 <h2 id="calendar">When should you trim hedges through the year in Moreton Bay?</h2>
 <p>Warm-season hedging plants in Moreton Bay grow in flushes: a big one in spring, steady growth through the wet summer, a smaller flush in autumn, and very little between June and August. Trimming works with those flushes rather than against them.</p>
-<div class="tbl-wrap"><table>
+<div class="tbl-wrap" tabindex="0" role="region" aria-label="Comparison table, scrolls sideways on small screens"><table>
 <thead><tr><th>Period</th><th>What to do</th><th>Why</th></tr></thead>
 <tbody>
 <tr><td>Late August – October</td><td>Main shaping cut, any height reduction</td><td>Plant is about to push hard; cuts heal fast and fill in within weeks.</td></tr>
@@ -135,7 +135,7 @@ dict(
 {callout("<strong>Hedge plants to avoid in Moreton Bay:</strong> English box (hates humidity), running bamboo (spreads under fences), and Cocky Apple or Golden Cane palms as ‘hedges’ (they are not hedges and they never look like one).", "shield")}
 
 <h2 id="maintenance">How much trimming do these hedge plants really need?</h2>
-<div class="tbl-wrap"><table>
+<div class="tbl-wrap" tabindex="0" role="region" aria-label="Comparison table, scrolls sideways on small screens"><table>
 <thead><tr><th>Plant</th><th>Growth rate</th><th>Trims per year</th><th>Reshoots from old wood?</th></tr></thead>
 <tbody>
 <tr><td>Lilly pilly 'Resilience'</td><td>Fast</td><td>3</td><td>Yes</td></tr>
@@ -186,7 +186,7 @@ dict(
 
 <h2 id="types">Which mulch is best for Moreton Bay gardens, and does it change when to mulch?</h2>
 <p>Every landscape yard from Caboolture to Kilcoy sells five or six options. They are not interchangeable.</p>
-<div class="tbl-wrap"><table>
+<div class="tbl-wrap" tabindex="0" role="region" aria-label="Comparison table, scrolls sideways on small screens"><table>
 <thead><tr><th>Mulch</th><th>Best for</th><th>Lasts</th><th>Weed suppression</th></tr></thead>
 <tbody>
 <tr><td>Hardwood chip</td><td>Landscape beds, driveways, large rural gardens</td><td>18–24 months</td><td>Excellent</td></tr>
@@ -260,7 +260,7 @@ dict(
 <p>Soft, bright green tufts with white seed heads that appear in couch and kikuyu lawns in June and July and die off by October, leaving bare patches.</p>
 
 <h2 id="timing">When is the best time to get rid of weeds in a Queensland lawn?</h2>
-<div class="tbl-wrap"><table>
+<div class="tbl-wrap" tabindex="0" role="region" aria-label="Comparison table, scrolls sideways on small screens"><table>
 <thead><tr><th>Weed</th><th>Treat</th><th>How</th></tr></thead>
 <tbody>
 <tr><td>Bindii</td><td>June – August, before seed sets</td><td>Selective broadleaf herbicide (bromoxynil + MCPA type); repeat after 3 weeks</td></tr>

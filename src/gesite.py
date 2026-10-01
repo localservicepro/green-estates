@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Shared constants, icons and components for the Green Estates Gardening static build."""
-import json, html, re
+import json, html, re, os
 
 SITE = dict(
     name="Green Estates Gardening",
@@ -104,13 +104,35 @@ def stars(n=5):
 def esc(s):
     return html.escape(s, quote=True)
 
-def picture(name, alt, sizes="(min-width: 1024px) 50vw, 100vw", cls="", loading="lazy", fetchpriority=None, width=None, height=None):
-    src = f"/assets/img/{name}-1000.webp"
-    srcset = f"/assets/img/{name}-600.webp 600w, /assets/img/{name}-1000.webp 1000w, /assets/img/{name}-1600.webp 1600w"
+IMG_WIDTHS = (400, 600, 800, 1200, 1600)
+# sizes hints measured against the real layout (container 1200px, 16px/32px gutters)
+# Hero backgrounds sit under a 60-94% dark overlay, so phones get a half-width file (400w on a typical phone)
+SIZES_HERO = "(max-width: 767px) 50vw, 100vw"
+SIZES_HALF = "(min-width: 1200px) 560px, (min-width: 900px) 46vw, calc(100vw - 32px)"
+SIZES_GALLERY = "(min-width: 1200px) 272px, (min-width: 768px) 23vw, calc(50vw - 22px)"
+SIZES_GALLERY_WIDE = "(min-width: 1200px) 560px, (min-width: 768px) 47vw, calc(100vw - 32px)"
+
+def srcset_for(name):
+    return ", ".join(f"/assets/img/{name}-{w}.webp {w}w" for w in IMG_WIDTHS)
+
+def picture(name, alt, sizes="(min-width: 1200px) 560px, (min-width: 1024px) 46vw, calc(100vw - 32px)", cls="", loading="lazy", fetchpriority=None, width=None, height=None):
+    src = f"/assets/img/{name}-800.webp"
+    srcset = srcset_for(name)
     extra = f' fetchpriority="{fetchpriority}"' if fetchpriority else ""
     dims = f' width="{width}" height="{height}"' if width and height else ""
     c = f' class="{cls}"' if cls else ""
     return f'<img src="{src}" srcset="{srcset}" sizes="{sizes}" alt="{esc(alt)}" loading="{loading}" decoding="async"{extra}{dims}{c}>'
+
+def _load_inline_css():
+    root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "public", "assets", "css")
+    css = open(os.path.join(root, "fonts.css")).read() + "\n" + open(os.path.join(root, "site.css")).read()
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)          # comments
+    css = re.sub(r"\s*\n\s*", "", css)                         # newlines and indentation
+    css = re.sub(r"\s*([{};,>])\s*", r"\1", css)                # space around punctuation
+    css = re.sub(r";}", "}", css)
+    return css.strip()
+
+INLINE_CSS = _load_inline_css()
 
 # ---------------- Header / footer ----------------
 
@@ -125,7 +147,7 @@ def header(current="/"):
         cols = []
         for gname, items in AREA_GROUPS:
             links = "".join(f'<a class="dd-link" role="menuitem" href="{path}">{esc(name)}<small>{"Garden maintenance" if kind == "garden" else "Lawn mowing"}</small></a>' for name, kind, path in items)
-            cols.append(f'<div class="dd-col"><h5>{esc(gname)}</h5>{links}</div>')
+            cols.append(f'<div class="dd-col"><p class="dd-col-title">{esc(gname)}</p>{links}</div>')
         areas_dd = f'''<div class="nav-dropdown nav-dropdown--areas">
         <button class="nav-link nav-trigger" aria-expanded="false" aria-controls="areas-menu" aria-haspopup="true">Areas
           <svg class="caret" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -148,8 +170,8 @@ def header(current="/"):
 <header class="site-header">
   <div class="nav-inner">
     <a href="/" class="brand" aria-label="Green Estates Gardening — home">
-      <img class="logo-light" src="/assets/img/logo-green-estates-gardening.webp" alt="Green Estates Gardening logo" width="328" height="253">
-      <img class="logo-dark" src="/assets/img/logo-green-estates-gardening-knockout.png" alt="Green Estates Gardening logo" width="328" height="253">
+      <img class="logo-light" loading="lazy" decoding="async" src="/assets/img/logo-green-estates-gardening-200.webp" srcset="/assets/img/logo-green-estates-gardening-100.webp 1x, /assets/img/logo-green-estates-gardening-200.webp 2x" alt="Green Estates Gardening logo" width="328" height="253">
+      <img class="logo-dark" src="/assets/img/logo-green-estates-gardening-knockout-200.webp" srcset="/assets/img/logo-green-estates-gardening-knockout-100.webp 1x, /assets/img/logo-green-estates-gardening-knockout-200.webp 2x" alt="Green Estates Gardening logo" width="328" height="253">
     </a>
     <nav class="nav-main" aria-label="Main navigation">
       <a href="/" class="nav-link">Home</a>
@@ -201,16 +223,16 @@ def footer():
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="/assets/img/logo-green-estates-gardening-knockout.png" alt="Green Estates Gardening logo" width="328" height="253">
+        <img src="/assets/img/logo-green-estates-gardening-knockout-200.webp" srcset="/assets/img/logo-green-estates-gardening-knockout-100.webp 1x, /assets/img/logo-green-estates-gardening-knockout-200.webp 2x" alt="Green Estates Gardening logo" width="328" height="253" loading="lazy" decoding="async">
         <p>Lawn mowing, hedge trimming, garden cleanups and mulching for homes, acreage and commercial properties across the Moreton Bay and Somerset regions. Based in Wamuran, Queensland.</p>
         <a class="social" href="{SITE['facebook']}" rel="noopener" target="_blank">{icon("facebook")} Follow us on Facebook</a>
       </div>
       <div>
-        <h4>Services</h4>
+        <h2 class="footer-h">Services</h2>
         <ul>{svc}<li><a href="/#services">All services</a></li></ul>
       </div>
       <div>
-        <h4>Company</h4>
+        <h2 class="footer-h">Company</h2>
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/about/">About Green Estates</a></li>
@@ -220,14 +242,14 @@ def footer():
         </ul>
       </div>
       <div>
-        <h4>Contact</h4>
+        <h2 class="footer-h">Contact</h2>
         <ul>
           <li><a href="tel:{SITE['phone_tel']}">{SITE['phone']}</a></li>
           <li><a href="mailto:{SITE['email']}">{SITE['email']}</a></li>
           <li>Wamuran QLD 4512</li>
           <li>{SITE['hours']}</li>
         </ul>
-        <h4 style="margin-top:22px">Service areas</h4>
+        <h2 class="footer-h" style="margin-top:22px">Service areas</h2>
         <p class="footer-areas"><strong>Moreton Bay:</strong> {areas_mb}.<br><strong>Somerset:</strong> {areas_som}.</p>
       </div>
     </div>
@@ -237,8 +259,6 @@ def footer():
     </div>
   </div>
 </footer>
-<script src="/assets/js/vendor/gsap.min.js" defer></script>
-<script src="/assets/js/vendor/ScrollTrigger.min.js" defer></script>
 <script src="/assets/js/site.js" defer></script>
 '''
 
@@ -300,7 +320,7 @@ def faq_section(faqs, heading="Frequently asked questions", eyebrow="FAQ", intro
   </div>
 </section>'''
 
-def gallery(items, sizes="(min-width: 768px) 25vw, 50vw"):
+def gallery(items, sizes=None):
     """Gallery tiles. Each item: (image, alt, wide) or (image, alt, wide, href, caption).
     Tiles with a href link to that suburb or service page so the homepage passes authority where it ranks."""
     out = []
@@ -308,7 +328,7 @@ def gallery(items, sizes="(min-width: 768px) 25vw, 50vw"):
         name, alt, wide = it[0], it[1], it[2]
         href = it[3] if len(it) > 3 else None
         cap = it[4] if len(it) > 4 else None
-        fig = f'<figure>{picture(name, alt, sizes=sizes)}{f"<figcaption>{esc(cap)}</figcaption>" if cap else ""}</figure>'
+        fig = f'<figure>{picture(name, alt, sizes=sizes or (SIZES_GALLERY_WIDE if wide else SIZES_GALLERY))}{f"<figcaption>{esc(cap)}</figcaption>" if cap else ""}</figure>'
         cls = ' class="wide"' if wide else ""
         out.append(f'<a{cls} href="{href}" aria-label="{esc(cap or alt)}">{fig}</a>' if href else f'<div{cls}>{fig}</div>')
     return '<div class="gallery" data-reveal-stagger>' + "".join(out) + '</div>'
@@ -327,7 +347,7 @@ def suburb_link_block(names, kind_label="Lawn mowing"):
         html_ += f'<p class="muted" style="margin:24px 0 10px">Also on the same round:</p><ul class="chips">{"".join(plain)}</ul>'
     return html_
 
-def service_cards(exclude_slug=None, sizes="(min-width: 1024px) 33vw, 100vw"):
+def service_cards(exclude_slug=None, sizes="(min-width: 1200px) 370px, (min-width: 1024px) 31vw, (min-width: 640px) 46vw, calc(100vw - 32px)"):
     cards = []
     for s in SERVICES:
         if s["slug"] == exclude_slug:
@@ -419,8 +439,8 @@ def check_list(items):
 
 def before_after(before, after, alt_before, alt_after, label="Drag to compare before and after"):
     return f'''<div class="ba" data-reveal>
-  <img src="/assets/img/{before}-1000.webp" srcset="/assets/img/{before}-600.webp 600w, /assets/img/{before}-1000.webp 1000w, /assets/img/{before}-1600.webp 1600w" sizes="(min-width: 900px) 50vw, 100vw" alt="{esc(alt_before)}" loading="lazy" decoding="async">
-  <img class="ba__after" src="/assets/img/{after}-1000.webp" srcset="/assets/img/{after}-600.webp 600w, /assets/img/{after}-1000.webp 1000w, /assets/img/{after}-1600.webp 1600w" sizes="(min-width: 900px) 50vw, 100vw" alt="{esc(alt_after)}" loading="lazy" decoding="async">
+  <img src="/assets/img/{before}-800.webp" srcset="{srcset_for(before)}" sizes="{SIZES_HALF}" alt="{esc(alt_before)}" width="800" height="600" loading="lazy" decoding="async">
+  <img class="ba__after" src="/assets/img/{after}-800.webp" srcset="{srcset_for(after)}" sizes="{SIZES_HALF}" alt="{esc(alt_after)}" width="800" height="600" loading="lazy" decoding="async">
   <span class="ba__tag ba__tag--before">Before</span><span class="ba__tag ba__tag--after">After</span>
   <input type="range" min="0" max="100" value="50" aria-label="{esc(label)}">
   <span class="ba__handle" aria-hidden="true"></span>
@@ -518,11 +538,17 @@ def shell(page, body):
     hero_img = page.get("hero_img", "hero-lawn-mowing-moreton-bay")
     og_img = SITE["url"] + f"/assets/img/{hero_img}-1600.webp"
     schema = json.dumps(schema_graph(page), ensure_ascii=False)
+    # Preload the hero background only where the page actually shows it as its LCP image
+    hero_preload = ""
+    if f'/assets/img/{hero_img}-800.webp' in body and 'fetchpriority="high"' in body:
+        hero_preload = f'<link rel="preload" as="image" href="/assets/img/{hero_img}-800.webp" imagesrcset="{srcset_for(hero_img)}" imagesizes="{SIZES_HERO}" fetchpriority="high">'
     return f'''<!doctype html>
 <html lang="en-AU">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-sans-3-var.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/montserrat-var.woff2" crossorigin>
 <title>{esc(page["title"])}</title>
 <meta name="description" content="{esc(page["description"])}">
 {robots}
@@ -547,14 +573,13 @@ def shell(page, body):
 <link rel="icon" href="/assets/img/favicon.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Montserrat-800-latin.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/SourceSans3-400-latin.woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/fonts.css">
-<link rel="preload" as="image" href="/assets/img/{hero_img}-1600.webp" imagesrcset="/assets/img/{hero_img}-1000.webp 1000w, /assets/img/{hero_img}-1600.webp 1600w" imagesizes="100vw">
-<link rel="stylesheet" href="/assets/css/site.css">
+{hero_preload}
+<style>{INLINE_CSS}</style>
 <script type="application/ld+json">{schema}</script>
-<!-- CRM form tracking (LeadConnector) -->
-<script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="{SITE['tracking_id']}"></script>
+<!-- CRM form tracking (LeadConnector). Loaded on the visitor's first interaction (a tap, key, scroll or
+     focusing a form field) or 6 s after load, so it never blocks rendering. Form fields are always
+     touched before a submit, so every submission is still captured. -->
+<script>(function(w,d){{var on=0;function go(){{if(on)return;on=1;var s=d.createElement('script');s.src='https://link.msgsndr.com/js/external-tracking.js';s.async=true;s.setAttribute('data-tracking-id','{SITE['tracking_id']}');d.head.appendChild(s);}}['pointerdown','keydown','touchstart','scroll','focusin'].forEach(function(e){{w.addEventListener(e,go,{{once:true,passive:true}});}});w.addEventListener('load',function(){{setTimeout(go,6000);}});}})(window,document);</script>
 </head>
 <body>
 {header(page["path"])}

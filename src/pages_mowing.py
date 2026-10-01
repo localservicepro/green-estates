@@ -44,7 +44,7 @@ def lawn_mowing():
         <p>Blocks above about 2,500 square metres, lifestyle properties and hobby farms are a different job on different machines: see our <a href="/acreage-mowing-moreton-bay/">acreage and ride-on mowing</a> page.</p>
       </div>
       <div class="img-frame img-frame--tall" data-reveal>
-        {picture("push-mower-front-lawn-north-lakes", "Push mower and freshly cut front lawn at a North Lakes home, lawn mowing by Green Estates Gardening", sizes="(min-width: 900px) 45vw, 100vw")}
+        {picture("push-mower-front-lawn-north-lakes", "Push mower and freshly cut front lawn at a North Lakes home, lawn mowing by Green Estates Gardening", sizes="(min-width: 1200px) 560px, (min-width: 900px) 46vw, calc(100vw - 32px)")}
         <div class="img-badge"><div><strong>Fixed price</strong><br><span>per visit, quoted first</span></div></div>
       </div>
     </div>
@@ -76,7 +76,7 @@ def lawn_mowing():
         </div>
       </div>
       <div class="img-frame img-frame--tall" data-reveal>
-        {picture("walkway-mowing-edging", "Mown lawn and edged walkway at a Moreton Bay residential property", sizes="(min-width: 900px) 45vw, 100vw")}
+        {picture("walkway-mowing-edging", "Mown lawn and edged walkway at a Moreton Bay residential property", sizes="(min-width: 1200px) 560px, (min-width: 900px) 46vw, calc(100vw - 32px)")}
       </div>
     </div>
   </div>
@@ -154,7 +154,7 @@ def acreage_mowing():
         <p>Standard suburban block under 2,500 square metres? That is a different round on different machines: see our <a href="/lawn-mowing-moreton-bay/">residential lawn mowing</a> page.</p>
       </div>
       <div class="img-frame img-frame--tall" data-reveal>
-        {picture("ride-on-mowing-acreage-moreton-bay", "Green Estates Gardening operator ride-on mowing an acreage block in Moreton Bay", sizes="(min-width: 900px) 45vw, 100vw")}
+        {picture("ride-on-mowing-acreage-moreton-bay", "Green Estates Gardening operator ride-on mowing an acreage block in Moreton Bay", sizes="(min-width: 1200px) 560px, (min-width: 900px) 46vw, calc(100vw - 32px)")}
         <div class="img-badge"><div><strong>2,500 m²+</strong><br><span>ride-on territory</span></div></div>
       </div>
     </div>
@@ -251,7 +251,7 @@ def garden_maintenance():
         {check_list(["Garden beds weeded, edged and kept free of leaf litter", "Hedges and screens tipped between the main seasonal cuts", "Shrubs, roses and ornamentals pruned and dead-headed", "Paths, patio and driveway blown down before we leave"])}
       </div>
       <div class="img-frame img-frame--tall" data-reveal>
-        {picture("garden-beds-trees-tidy", "Tidy garden beds and pruned shrubs beside a Moreton Bay home on a regular garden maintenance round", sizes="(min-width: 900px) 45vw, 100vw")}
+        {picture("garden-beds-trees-tidy", "Tidy garden beds and pruned shrubs beside a Moreton Bay home on a regular garden maintenance round", sizes="(min-width: 1200px) 560px, (min-width: 900px) 46vw, calc(100vw - 32px)")}
       </div>
     </div>
   </div>
@@ -283,7 +283,7 @@ def garden_maintenance():
         <p style="margin-top:20px">Also on the round: Caboolture, Morayfield, Burpengary, Narangba, Strathpine, Bribie Island and Beachmere, and acreage gardens around Wamuran and D'Aguilar.</p>
       </div>
       <div class="img-frame" data-reveal>
-        {picture("hedge-trimming-townhouse-hedges", "Trimmed hedges and tidy beds at a Moreton Bay townhouse complex on a garden maintenance round", sizes="(min-width: 900px) 45vw, 100vw")}
+        {picture("hedge-trimming-townhouse-hedges", "Trimmed hedges and tidy beds at a Moreton Bay townhouse complex on a garden maintenance round", sizes="(min-width: 1200px) 560px, (min-width: 900px) 46vw, calc(100vw - 32px)")}
       </div>
     </div>
   </div>

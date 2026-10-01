@@ -54,8 +54,25 @@ title/description/first 100 words, word count, FAQ count, valid JSON-LD, no brok
 
 Every quote form posts field names that map to the GoHighLevel contact fields:
 `full_name`, `email`, `phone`, `property_address`, `property_type` (custom field `{{contact.property_type}}`),
-`property_size`, `service_needed`, `job_notes` (+ hidden `source_page`). The LeadConnector `external-tracking.js` script in `<head>` captures the
+`property_size`, `service_needed`, `job_notes` (+ hidden `source_page`). The LeadConnector `external-tracking.js` script captures the
 submit event; `site.js` then redirects to `/thank-you/`. There is no server endpoint.
+
+The tracker is injected by a small inline loader in `<head>` on the visitor's first tap, key press, scroll or form-field focus,
+or 6 seconds after load, whichever comes first. It never blocks rendering, and because a visitor always focuses a field
+before submitting, every submission is still captured.
+
+## Performance and accessibility rules
+
+These keep Lighthouse at 100 on mobile and desktop. Keep them when editing.
+
+- CSS is inlined into every page at build time (`INLINE_CSS` in `src/gesite.py`, read from `public/assets/css/`).
+- One variable font per family, trimmed to the weights and Latin glyphs used, preloaded in `<head>`.
+- No animation library. `site.js` reveals only content that starts below the fold; nothing in the first screen is hidden.
+- Photos come from `scripts/build-images.py` at 400/600/800/1200/1600 px. Hero backgrounds are lightly blurred and
+  more compressed because they sit under the dark overlay, and phones get a half-width hero file.
+- Use the `SIZES_*` constants in `src/gesite.py` for `sizes`, so phones never download desktop images.
+- Text on green sections uses full-strength `--c-light`. Text on Vibrant Green buttons uses `--c-dark-ink`.
+- Footer and menu column labels are not `h4`/`h5`, so heading order stays valid on every page.
 
 ## Local preview
 
