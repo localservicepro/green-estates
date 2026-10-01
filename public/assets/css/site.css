@@ -215,7 +215,7 @@ body.nav-open{overflow:hidden}
 .grid>*{min-width:0}
 h1,h2,h3,h4{overflow-wrap:break-word}
 @media (min-width:640px){.grid--2{grid-template-columns:1fr 1fr}.grid--3{grid-template-columns:1fr 1fr}.grid--4{grid-template-columns:1fr 1fr}.grid--services{grid-template-columns:1fr 1fr}}
-@media (min-width:1024px){.grid--services{grid-template-columns:repeat(4,1fr)}}
+@media (min-width:1024px){.grid--services{grid-template-columns:repeat(3,1fr)}}
 .grid--services .service-card__body{padding:22px 22px 24px}
 .grid--services .service-card h3{font-size:1.15rem}
 @media (min-width:1024px){.grid--3{grid-template-columns:repeat(3,1fr)}.grid--4{grid-template-columns:repeat(4,1fr)}}
@@ -310,10 +310,14 @@ h1,h2,h3,h4{overflow-wrap:break-word}
 /* Gallery */
 .gallery{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
 @media (min-width:768px){.gallery{grid-template-columns:repeat(4,1fr);gap:16px}}
+.gallery>a,.gallery>div{display:block;border-radius:18px;text-decoration:none;color:inherit}
+.gallery>a:focus-visible{outline:3px solid var(--c-accent);outline-offset:3px}
 .gallery figure{margin:0;border-radius:18px;overflow:hidden;aspect-ratio:1/1;position:relative;background:var(--g-200)}
-.gallery figure.wide{grid-column:span 2;aspect-ratio:2/1}
+.gallery>.wide{grid-column:span 2}
+.gallery>.wide figure{aspect-ratio:2/1}
 .gallery img{width:100%;height:100%;object-fit:cover;transition:transform 700ms var(--ease-out)}
-.gallery figure:hover img{transform:scale(1.05)}
+.gallery>a:hover img,.gallery figure:hover img{transform:scale(1.05)}
+.gallery>a:hover figcaption{background:var(--c-primary)}
 .gallery figcaption{position:absolute;left:12px;bottom:12px;right:12px;font-size:.8rem;font-weight:600;color:var(--c-light);background:rgba(26,60,14,.7);padding:6px 10px;border-radius:999px;backdrop-filter:blur(6px);width:max-content;max-width:calc(100% - 24px)}
 
 /* Image blocks */
@@ -492,6 +496,8 @@ a.card h3{text-decoration:none}
 .suburb-card em{display:block;font-style:normal;font-size:.84rem;color:var(--g-500)}
 .suburb-card>svg{width:20px;height:20px;color:var(--c-action)}
 .suburb-list{display:grid;gap:10px}
+.parent-link{font-size:.95rem;color:var(--g-500);margin:-6px 0 22px}.parent-link a{font-weight:600}
+.dd-item--parent{background:rgba(76,175,40,.1);border:1px solid rgba(76,175,40,.35);margin-bottom:6px}
 .hub-group h3{font-size:1.25rem;margin-bottom:4px}
 .hub-group>.muted{margin-bottom:16px}
 .hub-others{margin-top:48px;padding-top:32px;border-top:1px solid var(--g-200)}

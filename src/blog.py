@@ -95,7 +95,7 @@ def render_post(p, all_posts):
         </div>
         <div class="about-box">
           <h3>About Green Estates Gardening</h3>
-          <p>Green Estates Gardening Pty Ltd is an owner-operated lawn and garden business based in Wamuran, Queensland, run by {SITE['owner']} with more than 13 years of hands-on experience. We provide <a href="/lawn-mowing-moreton-bay/">acreage and ride-on mowing</a>, <a href="/hedge-trimming-moreton-bay/">hedge trimming</a>, <a href="/garden-cleanup-moreton-bay/">garden cleanups and weed control</a> and <a href="/mulching-services-moreton-bay/">mulching and minor tree work</a> across the Moreton Bay and Somerset regions, including Caboolture, Morayfield, Burpengary, Narangba, North Lakes, Redcliffe, Woodford, D'Aguilar, Kilcoy and Esk. Call {SITE['phone']} for a fixed-price quote.</p>
+          <p>Green Estates Gardening Pty Ltd is an owner-operated lawn and garden business based in Wamuran, Queensland, run by {SITE['owner']} with more than 13 years of hands-on experience. We provide <a href="/lawn-mowing-moreton-bay/">lawn mowing</a>, <a href="/acreage-mowing-moreton-bay/">acreage and ride-on mowing</a>, <a href="/hedge-trimming-moreton-bay/">hedge trimming</a>, <a href="/garden-cleanup-moreton-bay/">garden cleanups and weed control</a> and <a href="/mulching-services-moreton-bay/">mulching and minor tree work</a> across the Moreton Bay and Somerset regions, including Caboolture, Morayfield, Burpengary, Narangba, North Lakes, Redcliffe, Woodford, D'Aguilar, Kilcoy and Esk. Call {SITE['phone']} for a fixed-price quote.</p>
         </div>
       </article>
       <aside class="post-aside">

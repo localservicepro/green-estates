@@ -5,7 +5,7 @@ import json, html, re
 SITE = dict(
     name="Green Estates Gardening",
     legal="Green Estates Gardening Pty Ltd",
-    url="https://www.greenestatesgardening.com",
+    url="https://greenestatesgardening.com.au",
     phone="0439 550 850",
     phone_tel="+61439550850",
     email="greenestatesgardening@outlook.com",
@@ -17,18 +17,30 @@ SITE = dict(
     tracking_id="tk_b225e621e85a44b586690a7c2a3a39be",
 )
 
-MORETON_BAY = ["Wamuran", "Caboolture", "D'Aguilar", "Redcliffe", "Strathpine", "North Lakes", "Woodford",
-               "Elimbah", "Narangba", "Burpengary", "Morayfield", "Bracalba"]
+# The one suburb list. Used by the nav (via suburbs.LIVE for pages), footer, homepage, service pages
+# and the service-areas hub. Names with a live page are linked automatically through SUBURB_LINKS;
+# the rest stay plain text until there is demand or unique content for a page.
+MORETON_BAY = ["Wamuran", "Caboolture", "Morayfield", "Burpengary", "Narangba", "North Lakes", "Strathpine",
+               "Redcliffe", "Bribie Island", "Beachmere", "D'Aguilar", "Woodford", "Elimbah", "Bracalba"]
 SOMERSET = ["Kilcoy", "Esk", "Toogoolawah", "Lowood", "Fernvale"]
 ALL_SUBURBS = MORETON_BAY + SOMERSET
+# Suburb sets each mowing page links to (review v2, section 1)
+RESIDENTIAL_SUBURBS = ["Caboolture", "Morayfield", "Burpengary", "Narangba", "North Lakes", "Strathpine", "Redcliffe", "Bribie Island", "Beachmere"]
+ACREAGE_SUBURBS = ["Wamuran", "D'Aguilar", "Kilcoy", "Woodford", "Elimbah", "Bracalba", "Esk", "Toogoolawah", "Lowood", "Fernvale"]
 
 SERVICES = [
-    dict(slug="lawn-mowing-moreton-bay", nav="Lawn Mowing", card="Acreage & Ride-On Mowing",
-         descriptor="Acreage & ride-on · Wamuran, Caboolture & Somerset", icon="mower",
+    dict(slug="lawn-mowing-moreton-bay", nav="Lawn Mowing", card="Lawn Mowing",
+         descriptor="Residential rounds · Caboolture, North Lakes & Redcliffe", icon="lawn",
+         img="push-mower-striped-lawn-morayfield",
+         alt="Lawn mowing Moreton Bay: push mower leaving neat stripes on a residential lawn in Morayfield",
+         blurb="Weekly, fortnightly and monthly push-mowing rounds for homes, rentals and body corporates, with edging, line trimming and blow-down every visit.",
+         points=["Fortnightly & monthly rounds", "Edging, trimming & blow-down", "Homes, rentals & body corporates"]),
+    dict(slug="acreage-mowing-moreton-bay", nav="Acreage Mowing", card="Acreage & Ride-On Mowing",
+         descriptor="Lifestyle blocks · Wamuran, D'Aguilar & Somerset", icon="mower",
          img="ride-on-mowing-acreage-moreton-bay",
-         alt="Ride-on acreage mowing service in Moreton Bay with a zero-turn mower on a rural block",
-         blurb="Zero-turn ride-on mowing for acreage, lifestyle blocks and large yards, plus push mowing and edging for standard residential lawns.",
-         points=["Acreage & lifestyle blocks", "Ride-on and push mowing", "Edging, trimming & blow-down"]),
+         alt="Acreage mowing Moreton Bay: zero-turn ride-on mower on a rural lifestyle block",
+         blurb="Zero-turn ride-on mowing for lifestyle blocks, hobby farms and large yards from Wamuran over the range to Kilcoy. Fixed price per cut.",
+         points=["2,500 m² to 20+ acres", "Zero-turn ride-on mowing", "House yard finished by push mower"]),
     dict(slug="hedge-trimming-moreton-bay", nav="Hedge Trimming", card="Hedge Trimming & Pruning",
          descriptor="Morayfield, Burpengary & North Lakes", icon="shears",
          img="hedge-trimming-shaped-hedges",
@@ -47,6 +59,12 @@ SERVICES = [
          alt="Mulching services Moreton Bay: freshly mulched garden bed along a commercial building",
          blurb="Garden bed preparation and mulching that holds moisture through a Queensland summer, plus small limb and branch removal.",
          points=["Bed prep & mulch supply", "Small limb & branch removal", "Storm tidy-ups"]),
+    dict(slug="garden-maintenance-moreton-bay", nav="Garden Maintenance", card="Garden Maintenance",
+         descriptor="Regular garden care · North Lakes & Redcliffe", icon="sun",
+         img="garden-beds-trees-tidy",
+         alt="Garden maintenance Moreton Bay: tidy garden beds and pruned shrubs beside a home",
+         blurb="Recurring garden care bundled with your mowing visit: beds weeded, hedges kept in shape, shrubs pruned and everything tidy between cuts.",
+         points=["Bundled with mowing visits", "Beds, hedges & shrubs kept tidy", "Homes, rentals & body corporates"]),
 ]
 SERVICE_BY_SLUG = {s["slug"]: s for s in SERVICES}
 SUBURB_LINKS = {}  # filled by build.py from suburbs.LIVE
@@ -54,6 +72,7 @@ AREA_GROUPS = []   # filled by build.py: [(group_name, [(suburb, kind, path), ..
 
 ICONS = {
     "grid": '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg>',
+    "lawn": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18"/><path d="M6 20c0-4 1-7 2-9"/><path d="M10 20c-1-5 0-9 2-12"/><path d="M14 20c1-5 0-9-2-12"/><path d="M18 20c0-4-1-7-2-9"/><path d="M12 20c0-6 2-10 5-13"/></svg>',
     "mower": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5h9.5l3-7h3.5"/><rect x="4" y="12" width="9.5" height="4.5" rx="1.5"/><circle cx="6.5" cy="19" r="2"/><circle cx="16.5" cy="19" r="2"/><path d="M13.5 12 15 8.5"/><path d="M2 11.5 4 7h4"/></svg>',
     "shears": '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.1 15.9 19 3"/><path d="M15.9 15.9 5 3"/></svg>',
     "leaf": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c0-9 5-15 16-16-1 11-7 16-16 16Z"/><path d="M4 20c3-5 7-9 12-12"/></svg>',
@@ -280,6 +299,33 @@ def faq_section(faqs, heading="Frequently asked questions", eyebrow="FAQ", intro
     <div class="faq" data-reveal-stagger>{''.join(items)}</div>
   </div>
 </section>'''
+
+def gallery(items, sizes="(min-width: 768px) 25vw, 50vw"):
+    """Gallery tiles. Each item: (image, alt, wide) or (image, alt, wide, href, caption).
+    Tiles with a href link to that suburb or service page so the homepage passes authority where it ranks."""
+    out = []
+    for it in items:
+        name, alt, wide = it[0], it[1], it[2]
+        href = it[3] if len(it) > 3 else None
+        cap = it[4] if len(it) > 4 else None
+        fig = f'<figure>{picture(name, alt, sizes=sizes)}{f"<figcaption>{esc(cap)}</figcaption>" if cap else ""}</figure>'
+        cls = ' class="wide"' if wide else ""
+        out.append(f'<a{cls} href="{href}" aria-label="{esc(cap or alt)}">{fig}</a>' if href else f'<div{cls}>{fig}</div>')
+    return '<div class="gallery" data-reveal-stagger>' + "".join(out) + '</div>'
+
+def suburb_link_block(names, kind_label="Lawn mowing"):
+    """Suburb cards for names that have a live page, plus plain chips for the rest."""
+    cards, plain = [], []
+    for n in names:
+        u = SUBURB_LINKS.get(n)
+        if u:
+            cards.append(f'<a class="suburb-card" href="{u}"><span class="icon-tile">{icon("pin")}</span><span><strong>{esc(n)}</strong><em>{kind_label}</em></span>{icon("arrow")}</a>')
+        else:
+            plain.append(f'<li>{esc(n)}</li>')
+    html_ = f'<div class="suburb-grid" data-reveal-stagger>{"".join(cards)}</div>'
+    if plain:
+        html_ += f'<p class="muted" style="margin:24px 0 10px">Also on the same round:</p><ul class="chips">{"".join(plain)}</ul>'
+    return html_
 
 def service_cards(exclude_slug=None, sizes="(min-width: 1024px) 33vw, 100vw"):
     cards = []

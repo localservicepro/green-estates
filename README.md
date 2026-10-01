@@ -2,7 +2,7 @@
 
 Static, dependency-free website for Green Estates Gardening Pty Ltd (Wamuran QLD), built to the
 SEO Website Strategy doc and the approved brand board. Replaces the Wix site at
-https://www.greenestatesgardening.com.
+https://greenestatesgardening.com.au (the old Wix site was on the .com).
 
 ## Layout
 
@@ -11,7 +11,7 @@ https://www.greenestatesgardening.com.
 | `public/` | **Deployable site.** Point any static host (Vercel, Netlify, cPanel, S3) at this folder. |
 | `src/build.py` | Generates every page in `public/` from the content modules and runs SEO checks. |
 | `src/gesite.py` | Shared components: header, mega-menu, footer, quote form, schema, page shell. |
-| `src/pages_*.py` | Page copy, FAQs and metadata (locked H1/title/description from the strategy doc). |
+| `src/pages_*.py` | Page copy, FAQs and metadata. `pages_mowing.py` holds the residential lawn page, the acreage page and the garden maintenance parent (review v2). |
 | `src/blog.py`, `src/blog_posts_*.py` | Blog renderer and the ten articles. `src/density.py` reports keyword density. |
 | `src/suburbs.py`, `src/suburbs_data_*.py` | Service-areas hub and the 17 suburb landing pages. |
 | `scripts/build-images.py` | Turns `assets-src/` photos into named, optimised WebP files. |
@@ -35,8 +35,10 @@ title/description/first 100 words, word count, FAQ count, valid JSON-LD, no brok
 
 | URL | Primary keyword |
 |---|---|
-| `/` | Lawn Mowing Moreton Bay |
-| `/lawn-mowing-moreton-bay/` | Acreage Mowing Moreton Bay (retargeted per strategy doc) |
+| `/` | Lawn Mowing & Garden Care Moreton Bay (brand/hub page; natural keyword usage per review v2) |
+| `/lawn-mowing-moreton-bay/` | Lawn Mowing Moreton Bay (residential push-mowing rounds) |
+| `/acreage-mowing-moreton-bay/` | Acreage Mowing Moreton Bay & Somerset (ride-on, lifestyle blocks) |
+| `/garden-maintenance-moreton-bay/` | Garden Maintenance Moreton Bay (light parent for the North Lakes and Redcliffe garden pages) |
 | `/hedge-trimming-moreton-bay/` | Hedge Trimming Moreton Bay |
 | `/garden-cleanup-moreton-bay/` | Garden Cleanup Moreton Bay |
 | `/mulching-services-moreton-bay/` | Mulching Services Moreton Bay |
@@ -59,4 +61,13 @@ submit event; `site.js` then redirects to `/thank-you/`. There is no server endp
 
 ```bash
 npx serve public   # or: python3 -m http.server -d public 8080
+```
+
+## Redirects
+
+Old Wix URLs had no trailing slash. `vercel.json` and `netlify.toml` carry explicit 301 rules for all 18 old
+sitemap URLs plus a `www` to apex redirect. Verify against a preview or the live domain with:
+
+```
+node scripts/check-redirects.mjs https://greenestatesgardening.com.au
 ```

@@ -6,3 +6,98 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Old Wix URLs had no trailing slash. Every one must 301 to its slashed equivalent in one hop
+# (review v2, blocker 2). Netlify's pretty-URL handling would do this with a 301 as well, but the
+# explicit rules make the behaviour independent of site settings.
+[[redirects]]
+  from = "https://www.greenestatesgardening.com.au/*"
+  to = "https://greenestatesgardening.com.au/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/lawn-mowing-moreton-bay"
+  to = "/lawn-mowing-moreton-bay/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/hedge-trimming-moreton-bay"
+  to = "/hedge-trimming-moreton-bay/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/garden-cleanup-moreton-bay"
+  to = "/garden-cleanup-moreton-bay/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/mulching-services-moreton-bay"
+  to = "/mulching-services-moreton-bay/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/service-areas"
+  to = "/service-areas/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/about"
+  to = "/about/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/contact"
+  to = "/contact/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog"
+  to = "/blog/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-north-lakes"
+  to = "/blog/lawn-mowing-north-lakes/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-redcliffe"
+  to = "/blog/lawn-mowing-redcliffe/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-caboolture"
+  to = "/blog/lawn-mowing-caboolture/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-morayfield"
+  to = "/blog/lawn-mowing-morayfield/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-bribie-island"
+  to = "/blog/lawn-mowing-bribie-island/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/garden-maintenance-north-lakes"
+  to = "/blog/garden-maintenance-north-lakes/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-narangba"
+  to = "/blog/lawn-mowing-narangba/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/garden-maintenance-redcliffe"
+  to = "/blog/garden-maintenance-redcliffe/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/lawn-mowing-strathpine"
+  to = "/blog/lawn-mowing-strathpine/"
+  status = 301
+  force = true

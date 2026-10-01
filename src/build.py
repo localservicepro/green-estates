@@ -4,7 +4,7 @@ Usage: python3 src/build.py"""
 import os, re, json, sys, html as htmllib
 sys.path.insert(0, os.path.dirname(__file__))
 from gesite import SITE, shell, ALL_SUBURBS
-import pages_home, pages_services, pages_other, blog, blog_posts, suburbs, gesite
+import pages_home, pages_services, pages_mowing, pages_other, blog, blog_posts, suburbs, gesite
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUB = os.path.join(ROOT, "public")
@@ -13,8 +13,8 @@ POSTS = blog_posts.POSTS
 gesite.SUBURB_LINKS.update({s['name']: s['path'] for s in suburbs.LIVE if s['kind'] == 'lawn'})
 gesite.AREA_GROUPS[:] = [(gname, [(s['name'], s['kind'], s['path']) for s in suburbs.LIVE if s['group'] == key]) for key, gname, _ in suburbs.GROUPS]
 pages_home.BLOG_TEASER = blog.blog_teaser_section(POSTS)
-PAGES = [pages_home.home(), pages_services.lawn_mowing(), pages_services.hedge_trimming(),
-         pages_services.garden_cleanup(), pages_services.mulching(), pages_other.about(),
+PAGES = [pages_home.home(), pages_mowing.lawn_mowing(), pages_mowing.acreage_mowing(), pages_services.hedge_trimming(),
+         pages_services.garden_cleanup(), pages_services.mulching(), pages_mowing.garden_maintenance(), pages_other.about(),
          pages_other.contact(), pages_other.thank_you(), pages_other.not_found(), blog.render_index(POSTS)]
 PAGES += [blog.render_post(p, POSTS) for p in POSTS]
 PAGES += suburbs.suburb_pages()
