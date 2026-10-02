@@ -8,7 +8,7 @@
   /* ---------- Header ---------- */
   var header = d.querySelector('.site-header');
   function onScroll() { if (header) header.classList.toggle('scrolled', w.scrollY > 40); }
-  w.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  w.addEventListener('scroll', onScroll, { passive: true }); w.requestAnimationFrame(onScroll);
 
   /* Mega-dropdowns (Services, Areas): hover on pointer devices, click everywhere */
   var dds = Array.prototype.slice.call(d.querySelectorAll('.nav-dropdown'));
@@ -233,30 +233,36 @@
      anything already on screen at load is never hidden, so first paint and LCP are not delayed.
      Classes are removed once the reveal finishes so hover transitions behave normally. */
   if (reduce || !('IntersectionObserver' in w)) return;
-  var vh = w.innerHeight || d.documentElement.clientHeight;
-  var below = function (el) { var r = el.getBoundingClientRect(); return r.height > 0 && r.top > vh * 0.9; };
   var settle = function (el, cls, ms) { setTimeout(function () { el.classList.remove(cls, 'is-in'); }, ms); };
+  var play = function (el) {
+    el.classList.add('is-in');
+    if (el.classList.contains('rv')) settle(el, 'rv', 700);
+    if (el.classList.contains('rv-s')) settle(el, 'rv-s', 600 + Math.min(el.children.length, 12) * 70);
+    if (el.hasAttribute('data-count')) countUp(el);
+  };
+  var hide = function (el) {
+    if (el.hasAttribute('data-reveal')) el.classList.add('rv');
+    if (el.hasAttribute('data-reveal-stagger')) {
+      Array.prototype.forEach.call(el.children, function (c, i) { if (i < 12) c.style.setProperty('--i', i); });
+      el.classList.add('rv-s');
+    }
+    if (el.hasAttribute('data-count')) el.textContent = (0).toFixed(el.getAttribute('data-decimals') | 0) + (el.getAttribute('data-suffix') || '');
+  };
+  var seen = new WeakSet();
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
-      if (!en.isIntersecting) return;
-      var el = en.target; io.unobserve(el);
-      el.classList.add('is-in');
-      if (el.classList.contains('rv')) settle(el, 'rv', 700);
-      if (el.classList.contains('rv-s')) settle(el, 'rv-s', 600 + Math.min(el.children.length, 12) * 70);
-      if (el.hasAttribute('data-count')) countUp(el);
+      var el = en.target;
+      if (!seen.has(el)) {
+        /* first report: on screen at load -> leave it alone; below the fold -> hide it and wait */
+        seen.add(el);
+        var vh = w.innerHeight;
+        if (en.isIntersecting || en.boundingClientRect.top < vh || en.boundingClientRect.height === 0) { io.unobserve(el); return; }
+        hide(el); return;
+      }
+      if (en.isIntersecting) { io.unobserve(el); play(el); }
     });
   }, { rootMargin: '0px 0px -8% 0px' });
-
-  /* Read every position first, then write, so the browser lays out once instead of once per element */
-  var reveal = [], stagger = [], counters = [];
-  d.querySelectorAll('[data-reveal]').forEach(function (el) { if (below(el)) reveal.push(el); });
-  d.querySelectorAll('[data-reveal-stagger]').forEach(function (el) { if (below(el)) stagger.push(el); });
-  d.querySelectorAll('[data-count]').forEach(function (el) { if (below(el)) counters.push(el); });
-  reveal.forEach(function (el) { el.classList.add('rv'); io.observe(el); });
-  stagger.forEach(function (el) {
-    Array.prototype.forEach.call(el.children, function (c, i) { if (i < 12) c.style.setProperty('--i', i); });
-    el.classList.add('rv-s'); io.observe(el);
-  });
+  d.querySelectorAll('[data-reveal],[data-reveal-stagger],[data-count]').forEach(function (el) { io.observe(el); });
 
   /* Count-up stats: the final number is in the HTML; only numbers below the fold are animated */
   function countUp(el) {
@@ -270,8 +276,4 @@
     };
     w.requestAnimationFrame(step);
   }
-  counters.forEach(function (el) {
-    el.textContent = (0).toFixed(el.getAttribute('data-decimals') | 0) + (el.getAttribute('data-suffix') || '');
-    io.observe(el);
-  });
 })();

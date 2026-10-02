@@ -7,9 +7,10 @@ SRC = 'assets-src'
 OUT = 'public/assets/img'
 SIZES = (1600, 1200, 800, 600, 400)   # keep in sync with IMG_WIDTHS in src/gesite.py
 # Hero backgrounds sit under a dark green overlay, so they tolerate stronger compression.
-QUALITY = 58
+QUALITY = 56
+PHOTO_DENOISE = 0.6   # px at output size; removes camera noise in grass and foliage, about 40% smaller, not visible at display size
 HERO_QUALITY = 50
-HERO_BLUR = 0.8   # px at 800w, scaled with width; invisible under the overlay, halves the file size
+HERO_BLUR = 1.2   # px at 800w, scaled with width; invisible under the overlay, halves the file size
 
 # semantic name -> source file
 MANIFEST = {
@@ -67,6 +68,8 @@ for name, src in MANIFEST.items():
             im2 = im.copy()
         if name.startswith('hero-'):
             im2 = im2.filter(ImageFilter.GaussianBlur(HERO_BLUR * im2.size[0] / 800))
+        else:
+            im2 = im2.filter(ImageFilter.GaussianBlur(PHOTO_DENOISE))
         im2.save(outp, 'WEBP', quality=HERO_QUALITY if name.startswith('hero-') else QUALITY, method=6)
     print(name, '<-', src, im.size)
 # remove widths that are no longer generated

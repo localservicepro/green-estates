@@ -1,3 +1,8 @@
-/* One variable font per family, trimmed to the weights and Latin glyphs the site uses (src/build fonts step). */
-@font-face{font-family:'Montserrat';font-style:normal;font-weight:600 800;font-display:swap;src:url(/assets/fonts/montserrat-var.woff2) format('woff2')}
-@font-face{font-family:'Source Sans 3';font-style:normal;font-weight:300 600;font-display:swap;src:url(/assets/fonts/source-sans-3-var.woff2) format('woff2')}
+/* One variable font per family, trimmed to the weights and Latin glyphs the site uses.
+   font-display:optional + preload: the brand fonts are used when they arrive in time for the first paint
+   (almost always, and always from cache on later pages) and text is never re-laid out afterwards, so
+   there is no font-swap layout shift. The fallback faces are Arial resized to the brand fonts' metrics. */
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:600 800;font-display:optional;src:url(/assets/fonts/montserrat-var.woff2) format('woff2')}
+@font-face{font-family:'Source Sans 3';font-style:normal;font-weight:300 600;font-display:optional;src:url(/assets/fonts/source-sans-3-var.woff2) format('woff2')}
+@font-face{font-family:'Montserrat Fallback';font-weight:600 800;src:local('Arial Bold'),local('Arial-BoldMT'),local('Arial');size-adjust:115%;ascent-override:84%;descent-override:22%;line-gap-override:0%}
+@font-face{font-family:'Source Sans Fallback';font-weight:300 600;src:local('Arial'),local('ArialMT');size-adjust:94%;ascent-override:109%;descent-override:42%;line-gap-override:0%}

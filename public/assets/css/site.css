@@ -11,8 +11,8 @@
   --g-100:#EEF0EC;--g-200:#DDE1DA;--g-300:#C5CBC1;--g-400:#8A918A;--g-500:#5C645B;--g-600:#3E463D;
   --white:#FFFFFF;
   --ink:var(--c-dark);
-  --font-display:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --font-body:"Source Sans 3","Source Sans Pro",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-display:"Montserrat","Montserrat Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-body:"Source Sans 3","Source Sans Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
   --space-1:4px;--space-2:8px;--space-3:16px;--space-4:24px;--space-5:32px;--space-6:48px;--space-7:64px;--space-8:96px;
   --radius-s:10px;--radius-m:16px;--radius-l:24px;--radius-pill:999px;
   --shadow-s:0 6px 18px rgba(26,60,14,.08);
