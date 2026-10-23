@@ -10,11 +10,6 @@
 # Old Wix URLs had no trailing slash. Every one must 301 to its slashed equivalent in one hop
 # (review v2, blocker 2). Netlify's pretty-URL handling would do this with a 301 as well, but the
 # explicit rules make the behaviour independent of site settings.
-[[redirects]]
-  from = "https://www.greenestatesgardening.com.au/*"
-  to = "https://greenestatesgardening.com.au/:splat"
-  status = 301
-  force = true
 
 [[redirects]]
   from = "/lawn-mowing-moreton-bay"

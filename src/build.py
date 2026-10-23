@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Build the static site into ../public and run SEO/structure checks.
 Usage: python3 src/build.py"""
-import os, re, json, sys, html as htmllib
+import os, re, json, sys, hashlib, html as htmllib
 sys.path.insert(0, os.path.dirname(__file__))
 from gesite import SITE, shell, ALL_SUBURBS
 import pages_home, pages_services, pages_mowing, pages_other, blog, blog_posts, suburbs, gesite
@@ -76,11 +76,26 @@ def check(page, doc, body):
     notes.append(f"{faqs} FAQs")
     return problems, notes
 
+def asset_version():
+    """Short hash of everything under public/assets. Appended to asset URLs as ?v= so a new deploy can never
+    be shadowed by redirects or files a browser cached from an earlier one."""
+    h = hashlib.sha1()
+    base = os.path.join(PUB, "assets")
+    for root, dirs, files in sorted(os.walk(base)):
+        dirs.sort()
+        for fn in sorted(files):
+            fp = os.path.join(root, fn)
+            h.update(os.path.relpath(fp, base).encode()); h.update(open(fp, "rb").read())
+    return h.hexdigest()[:10]
+
+ASSET_RE = re.compile(r"(/assets/[^\s\"'()<>?]+\.(?:webp|png|jpg|js|woff2|css|svg|ico))")
+
 def main():
     written = []
+    ver = asset_version()
     all_links = set()
     for page, body in PAGES:
-        doc = shell(page, body)
+        doc = ASSET_RE.sub(lambda m: m.group(1) + "?v=" + ver, shell(page, body))
         p = out_path(page["path"])
         os.makedirs(os.path.dirname(p), exist_ok=True)
         with open(p, "w", encoding="utf-8") as f:
@@ -110,7 +125,7 @@ def main():
     for href in sorted(all_links):
         if href.startswith(("http", "mailto:", "tel:", "#", "data:")):
             continue
-        path = href.split("#")[0]
+        path = href.split("#")[0].split("?")[0]
         if not path:
             continue
         fs = os.path.join(PUB, path.lstrip("/"))

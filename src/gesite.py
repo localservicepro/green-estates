@@ -5,7 +5,7 @@ import json, html, re, os
 SITE = dict(
     name="Green Estates Gardening",
     legal="Green Estates Gardening Pty Ltd",
-    url="https://greenestatesgardening.com.au",
+    url="https://www.greenestatesgardening.com.au",
     phone="0439 550 850",
     phone_tel="+61439550850",
     email="greenestatesgardening@outlook.com",

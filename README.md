@@ -87,7 +87,10 @@ npx serve public   # or: python3 -m http.server -d public 8080
 ## Redirects
 
 Old Wix URLs had no trailing slash. `vercel.json` and `netlify.toml` carry explicit 301 rules for all 18 old
-sitemap URLs (the nine suburb pages redirect from `/blog/` to `/service-areas/`) plus a `www` to apex redirect. Verify against a preview or the live domain with:
+sitemap URLs (the nine suburb pages redirect from `/blog/` to `/service-areas/`). The primary domain is
+`https://www.greenestatesgardening.com.au`; the apex to `www` redirect lives in Vercel's Domains settings, not in
+`vercel.json` (a rule there in the opposite direction caused an asset redirect loop). Asset URLs carry `?v=<hash>`
+from the build so a deploy is never shadowed by redirects or files a browser cached earlier. Verify against a preview or the live domain with:
 
 ```
 node scripts/check-redirects.mjs https://greenestatesgardening.com.au

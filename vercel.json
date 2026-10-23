@@ -131,17 +131,6 @@
       "source": "/blog/garden-maintenance-redcliffe/",
       "destination": "/service-areas/garden-maintenance-redcliffe/",
       "statusCode": 301
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.greenestatesgardening.com.au"
-        }
-      ],
-      "destination": "https://greenestatesgardening.com.au/:path*",
-      "statusCode": 301
     }
   ],
   "headers": [
