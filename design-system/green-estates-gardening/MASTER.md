@@ -26,8 +26,8 @@ Sampled from the supplied logo file (for reference, not new tokens): wordmark/ar
 lime stripe `#90BA1A`, sun gold `#EF9D0E`.
 
 Contrast (WCAG AA, body ≥ 4.5:1): Dark Forest on Sage White 12.9:1 ✓ · Sage White on Deep Lawn
-Green 5.6:1 ✓ · Sage White on Dark Forest 12.4:1 ✓ · Dark Forest on Vibrant Grass Green 5.2:1 ✓
-(primary button label). Vibrant Grass Green on white 2.9:1 ✗ and Gold on white 1.9:1 ✗ → display
+Green 5.6:1 ✓ · Sage White on Dark Forest 12.4:1 ✓ · Dark Forest on Vibrant Grass Green 4.4:1 ✗ (fails AA) →
+button labels use Dark Forest ink `#0F2A08` on Vibrant Grass Green, 5.5:1 ✓. Vibrant Grass Green on white 2.9:1 ✗ and Gold on white 1.9:1 ✗ → display
 type, icons and fills only.
 
 Gradient allowed: Deep Lawn Green → Vibrant Grass Green only.
