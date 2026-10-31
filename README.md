@@ -2,7 +2,7 @@
 
 Static, dependency-free website for Green Estates Gardening Pty Ltd (Wamuran QLD), built to the
 SEO Website Strategy doc and the approved brand board. Replaces the Wix site at
-https://www.greenestatesgardening.com.
+https://greenestatesgardening.com.au (the old Wix site was on the .com).
 
 ## Layout
 
@@ -11,7 +11,9 @@ https://www.greenestatesgardening.com.
 | `public/` | **Deployable site.** Point any static host (Vercel, Netlify, cPanel, S3) at this folder. |
 | `src/build.py` | Generates every page in `public/` from the content modules and runs SEO checks. |
 | `src/gesite.py` | Shared components: header, mega-menu, footer, quote form, schema, page shell. |
-| `src/pages_*.py` | Page copy, FAQs and metadata (locked H1/title/description from the strategy doc). |
+| `src/pages_*.py` | Page copy, FAQs and metadata. `pages_mowing.py` holds the residential lawn page, the acreage page and the garden maintenance parent (review v2). |
+| `src/blog.py`, `src/blog_posts_*.py` | Blog renderer and the ten articles. `src/density.py` reports keyword density. |
+| `src/suburbs.py`, `src/suburbs_data_*.py` | Service-areas hub and the 17 suburb landing pages. |
 | `scripts/build-images.py` | Turns `assets-src/` photos into named, optimised WebP files. |
 | `assets-src/` | Client photos pulled from the shared Google Drive folder (source of truth for imagery). |
 | `design-system/green-estates-gardening/MASTER.md` | Brand tokens, type, motion and component rules (ui-ux-pro-max + brand board). |
@@ -33,24 +35,63 @@ title/description/first 100 words, word count, FAQ count, valid JSON-LD, no brok
 
 | URL | Primary keyword |
 |---|---|
-| `/` | Lawn Mowing Moreton Bay |
-| `/lawn-mowing-moreton-bay/` | Acreage Mowing Moreton Bay (retargeted per strategy doc) |
+| `/` | Lawn Mowing & Garden Care Moreton Bay (brand/hub page; natural keyword usage per review v2) |
+| `/lawn-mowing-moreton-bay/` | Lawn Mowing Moreton Bay (residential push-mowing rounds) |
+| `/acreage-mowing-moreton-bay/` | Acreage Mowing Moreton Bay & Somerset (ride-on, lifestyle blocks) |
+| `/garden-maintenance-moreton-bay/` | Garden Maintenance Moreton Bay (light parent for the North Lakes and Redcliffe garden pages) |
 | `/hedge-trimming-moreton-bay/` | Hedge Trimming Moreton Bay |
 | `/garden-cleanup-moreton-bay/` | Garden Cleanup Moreton Bay |
 | `/mulching-services-moreton-bay/` | Mulching Services Moreton Bay |
 | `/about/` | Local Gardeners Moreton Bay |
 | `/contact/` | Lawn Mowing Quote Moreton Bay |
 | `/thank-you/` | noindex, form redirect target |
+| `/blog/` + 10 posts | AEO articles (see `docs/blog-topic-research.md`) |
+| `/service-areas/` | Hub linking every suburb page |
+| `/service-areas/lawn-mowing-<suburb>/` ×7, `/service-areas/garden-maintenance-<suburb>/` ×2 | Suburb pages moved from the old `/blog/` URLs; each old URL 301s here |
+| `/service-areas/lawn-mowing-<suburb>/` ×8 | New suburb pages. Deception Bay, Petrie and Kallangur are noindexed and unlisted until `CONFIRMED_RADIUS = True` in `src/suburbs.py` |
 
 ## Forms / CRM
 
 Every quote form posts field names that map to the GoHighLevel contact fields:
-`full_name`, `email`, `phone`, `property_address`, `property_size`, `service_needed`, `job_notes`
-(+ hidden `source_page`). The LeadConnector `external-tracking.js` script in `<head>` captures the
+`full_name`, `email`, `phone`, `property_address`, `property_type` (custom field `{{contact.property_type}}`),
+`property_size`, `service_needed`, `job_notes` (+ hidden `source_page`). The LeadConnector `external-tracking.js` script captures the
 submit event; `site.js` then redirects to `/thank-you/`. There is no server endpoint.
+
+The tracker is injected by a small inline loader in `<head>` on the visitor's first tap, key press, scroll or form-field focus,
+or 6 seconds after load, whichever comes first. It never blocks rendering, and because a visitor always focuses a field
+before submitting, every submission is still captured.
+
+## Performance and accessibility rules
+
+These keep Lighthouse at 100 on mobile and desktop. Keep them when editing.
+
+- CSS is inlined into every page at build time (`INLINE_CSS` in `src/gesite.py`, read from `public/assets/css/`).
+- One variable font per family, trimmed to the weights and Latin glyphs used, preloaded in `<head>`, with
+  `font-display: optional` so text is never re-laid out after first paint (no font-swap layout shift). The
+  fallback faces are Arial resized to the brand fonts' metrics.
+- No animation library. `site.js` reveals only content that starts below the fold, using IntersectionObserver's first
+  report instead of reading layout, so start-up causes no forced reflow and nothing in the first screen is hidden.
+- Photos come from `scripts/build-images.py` at 400/600/800/1200/1600 px with a 0.6 px denoise that removes camera
+  noise in grass and foliage. Hero backgrounds get a softer blur and more compression because they sit under the
+  dark overlay, and phones get a half-width hero file.
+- Use the `SIZES_*` constants in `src/gesite.py` for `sizes`, so phones never download desktop images.
+- Text on green sections uses full-strength `--c-light`. Text on Vibrant Green buttons uses `--c-dark-ink`.
+- Footer and menu column labels are not `h4`/`h5`, so heading order stays valid on every page.
 
 ## Local preview
 
 ```bash
 npx serve public   # or: python3 -m http.server -d public 8080
+```
+
+## Redirects
+
+Old Wix URLs had no trailing slash. `vercel.json` and `netlify.toml` carry explicit 301 rules for all 18 old
+sitemap URLs (the nine suburb pages redirect from `/blog/` to `/service-areas/`). The primary domain is
+`https://www.greenestatesgardening.com.au`; the apex to `www` redirect lives in Vercel's Domains settings, not in
+`vercel.json` (a rule there in the opposite direction caused an asset redirect loop). Asset URLs carry `?v=<hash>`
+from the build so a deploy is never shadowed by redirects or files a browser cached earlier. Verify against a preview or the live domain with:
+
+```
+node scripts/check-redirects.mjs https://greenestatesgardening.com.au
 ```

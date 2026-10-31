@@ -40,7 +40,7 @@ for (const [label, vp, mobile] of [['desktop', { width: 1440, height: 900 }, fal
   await page.goto(base + '/', { waitUntil: 'networkidle' });
   await page.hover('.nav-trigger');
   await page.waitForTimeout(400);
-  const ddVisible = await page.locator('.dropdown-panel').isVisible();
+  const ddVisible = await page.locator('#services-menu').isVisible();
   await page.screenshot({ path: `${out}/desktop-dropdown.png` });
   // header frosted after scroll
   await page.evaluate(() => window.scrollTo(0, 600)); await page.waitForTimeout(400);
@@ -53,7 +53,7 @@ for (const [label, vp, mobile] of [['desktop', { width: 1440, height: 900 }, fal
   const errCount = await page.locator('#quote .field.has-error').count();
   await page.screenshot({ path: `${out}/desktop-form-errors.png` });
   await page.fill('#quote-name', 'Test Person'); await page.fill('#quote-phone', '0400 000 000'); await page.fill('#quote-email', 'test@example.com');
-  await page.fill('#quote-address', '1 Test St, Caboolture'); await page.selectOption('#quote-service', 'Push Mowing');
+  await page.fill('#quote-address', '1 Test St, Caboolture'); await page.selectOption('#quote-type', 'Residential home'); await page.selectOption('#quote-service', 'Push Mowing');
   await page.click('#quote button[type=submit]');
   await page.waitForURL('**/thank-you/', { timeout: 5000 }).catch(() => {});
   const redirected = page.url().endsWith('/thank-you/');

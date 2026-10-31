@@ -1,17 +1,23 @@
 # -*- coding: utf-8 -*-
 """Build the static site into ../public and run SEO/structure checks.
 Usage: python3 src/build.py"""
-import os, re, json, sys, html as htmllib
+import os, re, json, sys, hashlib, html as htmllib
 sys.path.insert(0, os.path.dirname(__file__))
 from gesite import SITE, shell, ALL_SUBURBS
-import pages_home, pages_services, pages_other
+import pages_home, pages_services, pages_mowing, pages_other, blog, blog_posts, suburbs, gesite
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUB = os.path.join(ROOT, "public")
 
-PAGES = [pages_home.home(), pages_services.lawn_mowing(), pages_services.hedge_trimming(),
-         pages_services.garden_cleanup(), pages_services.mulching(), pages_other.about(),
-         pages_other.contact(), pages_other.thank_you(), pages_other.not_found()]
+POSTS = blog_posts.POSTS
+gesite.SUBURB_LINKS.update({s['name']: s['path'] for s in suburbs.LIVE if s['kind'] == 'lawn'})
+gesite.AREA_GROUPS[:] = [(gname, [(s['name'], s['kind'], s['path']) for s in suburbs.LIVE if s['group'] == key]) for key, gname, _ in suburbs.GROUPS]
+pages_home.BLOG_TEASER = blog.blog_teaser_section(POSTS)
+PAGES = [pages_home.home(), pages_mowing.lawn_mowing(), pages_mowing.acreage_mowing(), pages_services.hedge_trimming(),
+         pages_services.garden_cleanup(), pages_services.mulching(), pages_mowing.garden_maintenance(), pages_other.about(),
+         pages_other.contact(), pages_other.thank_you(), pages_other.not_found(), blog.render_index(POSTS)]
+PAGES += [blog.render_post(p, POSTS) for p in POSTS]
+PAGES += suburbs.suburb_pages()
 
 def out_path(path):
     if path.endswith(".html"):
@@ -41,7 +47,7 @@ def check(page, doc, body):
     notes.append(f"{len(words)} words")
     if kw:
         k = kw.lower()
-        if k not in title.lower(): problems.append("keyword not in title")
+        if k not in htmllib.unescape(title).lower(): problems.append("keyword not in title")
         if k not in htmllib.unescape(desc).lower(): problems.append("keyword not in description")
         if k not in text_of(h1s[0]).lower():
             # allow service+location split across the H1 (doc's H1s are locked verbatim)
@@ -70,11 +76,26 @@ def check(page, doc, body):
     notes.append(f"{faqs} FAQs")
     return problems, notes
 
+def asset_version():
+    """Short hash of everything under public/assets. Appended to asset URLs as ?v= so a new deploy can never
+    be shadowed by redirects or files a browser cached from an earlier one."""
+    h = hashlib.sha1()
+    base = os.path.join(PUB, "assets")
+    for root, dirs, files in sorted(os.walk(base)):
+        dirs.sort()
+        for fn in sorted(files):
+            fp = os.path.join(root, fn)
+            h.update(os.path.relpath(fp, base).encode()); h.update(open(fp, "rb").read())
+    return h.hexdigest()[:10]
+
+ASSET_RE = re.compile(r"(/assets/[^\s\"'()<>?]+\.(?:webp|png|jpg|js|woff2|css|svg|ico))")
+
 def main():
     written = []
+    ver = asset_version()
     all_links = set()
     for page, body in PAGES:
-        doc = shell(page, body)
+        doc = ASSET_RE.sub(lambda m: m.group(1) + "?v=" + ver, shell(page, body))
         p = out_path(page["path"])
         os.makedirs(os.path.dirname(p), exist_ok=True)
         with open(p, "w", encoding="utf-8") as f:
@@ -86,12 +107,25 @@ def main():
         for href in re.findall(r'href="([^"]+)"', doc):
             all_links.add(href)
     write_extras()
+    # prune pages from earlier builds that no longer exist (e.g. suburb pages moved from /blog/ to /service-areas/)
+    expected = {os.path.abspath(out_path(p["path"])) for p, _ in PAGES}
+    for root, dirs, files in os.walk(PUB):
+        if os.path.abspath(root).startswith(os.path.join(PUB, "assets")):
+            continue
+        for fn in files:
+            if fn.endswith(".html"):
+                fp = os.path.abspath(os.path.join(root, fn))
+                if fp not in expected:
+                    os.remove(fp); print("pruned stale page:", os.path.relpath(fp, PUB))
+    for root, dirs, files in os.walk(PUB, topdown=False):
+        if root != PUB and not os.listdir(root):
+            os.rmdir(root)
     # internal link resolution
     bad = []
     for href in sorted(all_links):
         if href.startswith(("http", "mailto:", "tel:", "#", "data:")):
             continue
-        path = href.split("#")[0]
+        path = href.split("#")[0].split("?")[0]
         if not path:
             continue
         fs = os.path.join(PUB, path.lstrip("/"))
@@ -106,7 +140,7 @@ def write_extras():
     indexable = [p for p, _ in PAGES if not p.get("noindex")]
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for p in indexable:
-        pri = "1.0" if p["path"] == "/" else ("0.9" if p.get("service") else "0.7")
+        pri = "1.0" if p["path"] == "/" else ("0.9" if p.get("service") else ("0.6" if p.get("article") else "0.7"))
         sm.append(f"  <url><loc>{SITE['url']}{p['path']}</loc><changefreq>monthly</changefreq><priority>{pri}</priority></url>")
     sm.append("</urlset>")
     open(os.path.join(PUB, "sitemap.xml"), "w").write("\n".join(sm))
